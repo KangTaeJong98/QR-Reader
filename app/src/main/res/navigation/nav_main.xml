@@ -8,5 +8,6 @@
     <fragment
         android:id="@+id/scanFragment"
         android:name="com.taetae98.qrreader.ScanFragment"
+        android:label="@string/scan"
         tools:layout="@layout/fragment_scan" />
 </navigation>
