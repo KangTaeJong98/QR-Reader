@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QR Reader</string>
+    <string name="scan">Scan</string>
+    <string name="qr">QR</string>
+    <string name="print">Print</string>
+    <string name="share">Share</string>
 </resources>
