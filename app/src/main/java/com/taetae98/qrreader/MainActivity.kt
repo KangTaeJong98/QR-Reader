@@ -1,13 +1,8 @@
 package com.taetae98.qrreader
 
-import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
+import com.taetae98.lib.navigation.NavigationActivity
+import com.taetae98.qrreader.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
-}
+class MainActivity : NavigationActivity<ActivityMainBinding>(
+    R.layout.activity_main, R.id.nav_host
+)
