@@ -22,7 +22,7 @@ abstract class BindingFragment<VB: ViewDataBinding>(
         return binding.root
     }
 
-    protected fun onCreateViewDataBinding() {
+    protected open fun onCreateViewDataBinding() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 }
