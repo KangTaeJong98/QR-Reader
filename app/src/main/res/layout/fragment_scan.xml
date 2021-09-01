@@ -29,11 +29,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layout"
+            app:layout_constraintBottom_toTopOf="@id/scroll_view"
             tools:title="@string/scan"
             tools:menu="@menu/fragment_scan_menu" />
         <ScrollView
-            android:id="@+id/layout"
+            android:id="@+id/scroll_view"
             android:fillViewport="true"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -41,62 +41,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" >
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinator_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/qr_card_view"
-                    android:onClick="@{onQR}"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_margin="50dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        app:qr="@{code}"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/qr_card_view"
+                        android:onClick="@{onQR}"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
                         android:layout_margin="50dp"
+                        app:cardBackgroundColor="@color/white"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            app:qr="@{code}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="50dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:src="@drawable/ic_launcher_foreground"
+                            tools:background="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/qr_text_view"
+                        android:onClick="@{onCode}"
+                        android:text="@{code}"
+                        android:textSize="18sp"
+                        android:textColor="?attr/colorSecondary"
+                        android:gravity="center"
+                        android:layout_margin="50dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/qr_card_view"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        tools:src="@drawable/ic_launcher_foreground"
-                        tools:background="@drawable/ic_launcher_background" />
-                </com.google.android.material.card.MaterialCardView>
+                        tools:text="@string/qr"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/qr_text_view"
-                    android:onClick="@{onCode}"
-                    android:text="@{code}"
-                    android:textSize="18sp"
-                    android:textColor="?attr/colorSecondary"
-                    android:gravity="center"
-                    android:layout_margin="50dp"
-                    android:layout_width="0dp"
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:src="@drawable/ic_round_qr_code_scanner_24"
+                    android:onClick="@{onScan}"
+                    android:contentDescription="@string/scan"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/qr_card_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="@string/qr"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_margin="25dp"
+                    app:layout_anchor="@id/layout"
+                    app:layout_anchorGravity="end|bottom"
+                    app:backgroundTint="?attr/colorPrimary" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:src="@drawable/ic_round_qr_code_scanner_24"
-            android:onClick="@{onScan}"
-            android:contentDescription="@string/scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintVertical_bias="1"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/layout"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
