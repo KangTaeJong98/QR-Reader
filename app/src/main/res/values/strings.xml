@@ -6,4 +6,7 @@
     <string name="share">Share</string>
     <string name="copy">Copy</string>
     <string name="file_provider">FileProvider</string>
+    <string name="generate">Generate</string>
+    <string name="history">History</string>
+    <string name="setting">Setting</string>
 </resources>
