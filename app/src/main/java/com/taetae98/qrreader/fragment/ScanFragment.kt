@@ -1,28 +1,24 @@
 package com.taetae98.qrreader.fragment
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.print.PrintHelper
+import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taetae98.lib.binding.BindingFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.application.toBarcode
 import com.taetae98.qrreader.databinding.FragmentScanBinding
+import com.taetae98.qrreader.manager.SimpleClipboardManager
 import com.taetae98.qrreader.viewmodel.QRViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.FileOutputStream
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan) {
@@ -31,7 +27,6 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
     private val onScanResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        Log.d(TAG, it.toString())
         when(it.resultCode) {
             Activity.RESULT_OK -> {
                 IntentIntegrator.parseActivityResult(it.resultCode, it.data).also { result ->
@@ -40,6 +35,9 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
             }
         }
     }
+
+    @Inject
+    lateinit var simpleClipboardManager: SimpleClipboardManager
 
     init {
         setHasOptionsMenu(true)
@@ -94,20 +92,21 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
     }
 
     private fun onQR() {
-        val file = File(requireContext().cacheDir, "/qr/${System.currentTimeMillis()}.png").apply {
-            parentFile?.mkdirs()
-        }
-        FileOutputStream(file).apply {
-            qrViewModel.qr.value!!.toBarcode().compress(Bitmap.CompressFormat.PNG, 100, this)
-        }
+        simpleClipboardManager.copyBarcode(
+            getString(R.string.qr),
+            qrViewModel.qr.value!!
+        )
 
-        val uri = FileProvider.getUriForFile(requireContext(),"FileProvider", file)
-        getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newUri(requireContext().contentResolver, "QR", uri))
+        Snackbar.make(binding.coordinatorLayout, getString(R.string.copy), Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onCode() {
-        getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("QR", qrViewModel.qr.value))
-        Toast.makeText(requireContext(), "Copy", Toast.LENGTH_SHORT).show()
+        simpleClipboardManager.copyText(
+            getString(R.string.qr),
+            qrViewModel.qr.value!!
+        )
+
+        Snackbar.make(binding.coordinatorLayout, getString(R.string.copy), Snackbar.LENGTH_SHORT).show()
     }
 
     private fun onPrint() {

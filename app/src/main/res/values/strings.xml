@@ -4,4 +4,6 @@
     <string name="qr">QR</string>
     <string name="print">Print</string>
     <string name="share">Share</string>
+    <string name="copy">Copy</string>
+    <string name="file_provider">FileProvider</string>
 </resources>
