@@ -4,9 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/drawable/fragment_message.xml" value="0.14583333333333334" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/drawable/ic_round_wifi_24.xml" value="0.1" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_calendar.xml" value="0.1296875" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_contact.xml" value="0.1296875" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_email.xml" value="0.1296875" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_generate.xml" value="0.1" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_internet.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_message.xml" value="0.1296875" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_scan.xml" value="0.33" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_tel.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_text.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragment_wifi.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/layout/fragmet_geo.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/menu/activity_main_navigation_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/menu/fragment_scan_menu.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/xml/file_path.xml" value="0.20104166666666667" />
