@@ -6,9 +6,15 @@
     <data>
         <variable
             name="code"
-            type="String" />
+            type="androidx.lifecycle.LiveData&lt;String>" />
         <variable
             name="onScan"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onQR"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onCode"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -40,14 +46,16 @@
                 android:layout_height="wrap_content">
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/qr_card_view"
-                    app:cardBackgroundColor="@color/white"
+                    android:onClick="@{onQR}"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:layout_margin="50dp"
+                    app:cardBackgroundColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
                     <com.google.android.material.imageview.ShapeableImageView
+                        app:qr="@{code}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="50dp"
@@ -60,6 +68,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/qr_text_view"
+                    android:onClick="@{onCode}"
                     android:text="@{code}"
                     android:textSize="18sp"
                     android:textColor="?attr/colorSecondary"

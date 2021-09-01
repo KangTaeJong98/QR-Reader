@@ -12,6 +12,10 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    protected fun <T> getSystemService(serviceClass: Class<T>): T {
+        return requireContext().getSystemService(serviceClass)
+    }
+
     protected fun finish() {
         requireActivity().finish()
     }

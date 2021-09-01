@@ -1,7 +1,6 @@
 package com.taetae98.lib.binding
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -20,7 +19,7 @@ abstract class BindingActivity<VB: ViewDataBinding>(
         onCreateViewDataBinding()
     }
 
-    protected fun onCreateViewDataBinding() {
+    protected open fun onCreateViewDataBinding() {
         binding.lifecycleOwner = this
     }
 }
