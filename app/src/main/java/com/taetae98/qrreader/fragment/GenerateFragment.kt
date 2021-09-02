@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.taetae98.lib.binding.BindingFragment
+import com.taetae98.module.binding.BindingFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentGenerateBinding
 import com.taetae98.qrreader.interfaces.TabComponent

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.google.zxing.BarcodeFormat" />
+
         <variable
-            name="code"
-            type="androidx.lifecycle.LiveData&lt;String>" />
+            name="viewModel"
+            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
         <variable
             name="onScan"
             type="android.view.View.OnClickListener" />
@@ -14,7 +16,7 @@
             name="onQR"
             type="android.view.View.OnClickListener" />
         <variable
-            name="onCode"
+            name="onText"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -41,52 +43,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" >
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/coordinator_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/qr_card_view"
-                        android:onClick="@{onQR}"
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
-                        android:layout_margin="50dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
-                        <com.google.android.material.imageview.ShapeableImageView
-                            app:qr="@{code}"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="50dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            tools:src="@drawable/ic_launcher_foreground"
-                            tools:background="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
+                android:layout_height="match_parent">
+                <com.taetae98.qrreader.view.BarcodeView
+                    android:id="@+id/barcode_view"
+                    app:barcode="@{viewModel.barcode}"
+                    app:format="@{viewModel.format}"
+                    android:onClick="@{onQR}"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/qr_text_view"/>
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/qr_text_view"
-                        android:onClick="@{onCode}"
-                        android:text="@{code}"
-                        android:textSize="18sp"
-                        android:textColor="?attr/colorSecondary"
-                        android:gravity="center"
-                        android:layout_margin="50dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/qr_card_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        tools:text="@string/qr"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/qr_text_view"
+                    android:onClick="@{onText}"
+                    android:text="@{viewModel.barcode}"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorSecondary"
+                    android:gravity="center"
+                    android:layout_margin="50dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/barcode_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Code"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:src="@drawable/ic_round_qr_code_scanner_24"
@@ -95,10 +83,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="25dp"
-                    app:layout_anchor="@id/layout"
-                    app:layout_anchorGravity="end|bottom"
-                    app:backgroundTint="?attr/colorPrimary" />
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:layout_constraintVertical_bias="1"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintTop_toBottomOf="@id/qr_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
