@@ -5,4 +5,12 @@
         <item name="android:insetBottom">0dp</item>
         <item name="cornerRadius">0dp</item>
     </style>
+
+    <style name="Theme.QRReader.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.QRReader.TextInputLayout.FilledBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+    </style>
 </resources>
