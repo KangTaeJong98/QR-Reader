@@ -8,15 +8,10 @@
 
         <variable
             name="viewModel"
-            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
+            type="com.taetae98.qrreader.viewmodel.CodeViewModel" />
+
         <variable
             name="onScan"
-            type="android.view.View.OnClickListener" />
-        <variable
-            name="onQR"
-            type="android.view.View.OnClickListener" />
-        <variable
-            name="onText"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -32,8 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/scroll_view"
-            tools:title="@string/scan"
-            tools:menu="@menu/fragment_scan_menu" />
+            tools:title="@string/scan" />
         <ScrollView
             android:id="@+id/scroll_view"
             android:fillViewport="true"
@@ -51,7 +45,6 @@
                     android:id="@+id/barcode_view"
                     app:barcode="@{viewModel.barcode}"
                     app:format="@{viewModel.format}"
-                    android:onClick="@{onQR}"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     app:cardBackgroundColor="@color/white"
@@ -62,7 +55,6 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/qr_text_view"
-                    android:onClick="@{onText}"
                     android:text="@{viewModel.barcode}"
                     android:textSize="18sp"
                     android:textColor="?attr/colorSecondary"
@@ -77,8 +69,8 @@
                     tools:text="Code"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:src="@drawable/ic_round_qr_code_scanner_24"
                     android:onClick="@{onScan}"
+                    android:src="@drawable/ic_round_qr_code_scanner_24"
                     android:contentDescription="@string/scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

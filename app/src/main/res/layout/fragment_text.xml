@@ -6,11 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
-
-        <variable
-            name="onQR"
-            type="android.view.View.OnClickListener" />
+            type="com.taetae98.qrreader.viewmodel.CodeViewModel" />
     </data>
 
     <ScrollView
@@ -21,20 +17,39 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                android:id="@+id/text_input_layout"
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/code_input_layout"
                 android:hint="@string/code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:endIconMode="clear_text"
-                app:boxBackgroundColor="@android:color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/format_input_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:text="@={viewModel.barcode}"
                     android:maxLines="10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:id="@+id/format_input_layout"
+                android:hint="@string/format"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/code_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -43,12 +58,11 @@
                 android:id="@+id/barcode_view"
                 app:barcode="@{viewModel.barcode}"
                 app:format="@{viewModel.format}"
-                android:onClick="@{onQR}"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_margin="50dp"
                 app:cardBackgroundColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/text_input_layout"
+                app:layout_constraintTop_toBottomOf="@id/format_input_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

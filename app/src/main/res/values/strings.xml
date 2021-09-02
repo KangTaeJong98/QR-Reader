@@ -26,11 +26,12 @@
     <string name="barcode">Barcode</string>
 
 
-    <!--    String-->
+<!--    String-->
     <string name="copy_image">Copy Image</string>
     <string name="copy_text">Copy Text</string>
     <string name="share_code">Share Code</string>
     <string name="copy_code">Copy Code</string>
     <string name="print_code">Print Code</string>
     <string name="share_image">Share Image</string>
+    <string name="format">Format</string>
 </resources>
