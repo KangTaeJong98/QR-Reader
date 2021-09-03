@@ -34,4 +34,6 @@
     <string name="print_code">Print Code</string>
     <string name="share_image">Share Image</string>
     <string name="format">Format</string>
+    <string name="address">Address</string>
+    <string name="protocol">Protocol</string>
 </resources>
