@@ -13,6 +13,7 @@ abstract class BarcodeActionHandler {
     fun action(barcode: String) {
         try {
             Log.d(TAG, "Action Barcode : $barcode")
+
             val scheme = barcode.substringBefore(":")
             Log.d(TAG, "Action Scheme : $scheme")
             when {
@@ -24,6 +25,9 @@ abstract class BarcodeActionHandler {
                 }
                 scheme.equals("geo", true) -> {
                     onLocation(Uri.parse(barcode))
+                }
+                scheme.equals("tel", true) -> {
+                    onTel(Uri.parse(barcode))
                 }
                 else -> {
                     onNothing(barcode)
@@ -39,6 +43,7 @@ abstract class BarcodeActionHandler {
     protected abstract fun onInternet(uri: Uri)
     protected abstract fun onWiFi(uri: Uri)
     protected abstract fun onLocation(uri: Uri)
+    protected abstract fun onTel(uri: Uri)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -65,6 +70,13 @@ abstract class BarcodeActionHandler {
             context.startActivity(Intent.createChooser(
                 Intent(Intent.ACTION_VIEW, uri),
                 context.getString(R.string.location)
+            ))
+        }
+
+        override fun onTel(uri: Uri) {
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_DIAL, uri),
+                context.getString(R.string.tel)
             ))
         }
     }
