@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.taetae98.module.binding.BindingFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentInternetBinding
 import com.taetae98.qrreader.interfaces.TabComponent
-import com.taetae98.qrreader.viewmodel.CodeViewModel
+import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import com.taetae98.qrreader.viewmodel.InternetViewModel
 
 class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragment_internet), TabComponent {
     override val tabIcon = R.drawable.ic_round_public_24
 
-    private val codeViewModel by viewModels<CodeViewModel>()
-    private val internetViewModel by viewModels<InternetViewModel>()
+    private val internetViewModel by activityViewModels<InternetViewModel>()
+    private val barcodeViewModel by viewModels<BarcodeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,13 +29,13 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
 
     private fun onObserveProtocol() {
         internetViewModel.protocol.observe(viewLifecycleOwner) {
-            codeViewModel.barcode.value = "$it://${internetViewModel.address.value}"
+            barcodeViewModel.barcode.value = "${it.lowercase()}://${internetViewModel.address.value}"
         }
     }
 
     private fun onObserveAddress() {
         internetViewModel.address.observe(viewLifecycleOwner) {
-            codeViewModel.barcode.value = "${internetViewModel.protocol.value}://$it"
+            barcodeViewModel.barcode.value = "${internetViewModel.protocol.value?.lowercase()}://$it"
         }
     }
 
@@ -47,7 +48,7 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = codeViewModel
+        binding.viewModel = barcodeViewModel
         binding.internetViewModel = internetViewModel
     }
 
@@ -62,11 +63,10 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
             )
 
             setOnItemClickListener { _, _, i, _ ->
-                internetViewModel.protocol.value = InternetViewModel.PROTOCOLS[i].lowercase()
+                internetViewModel.protocol.value = InternetViewModel.PROTOCOLS[i]
             }
 
-            setText(InternetViewModel.PROTOCOLS.first(), false)
-            internetViewModel.protocol.value = InternetViewModel.PROTOCOLS.first().lowercase()
+            setText(internetViewModel.protocol.value, false)
         }
     }
 }

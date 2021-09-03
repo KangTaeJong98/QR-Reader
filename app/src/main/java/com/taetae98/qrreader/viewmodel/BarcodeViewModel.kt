@@ -7,9 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CodeViewModel @Inject constructor(
+class BarcodeViewModel @Inject constructor(
     stateHandle: SavedStateHandle
-): ViewModel() {
-    val code by lazy { stateHandle.getLiveData("CODE_VIEW_MODEL_CODE", "") }
-    val format by lazy { stateHandle.getLiveData("CODE_VIEW_MODEL_FORMAT", BarcodeFormat.QR_CODE) }
+) : ViewModel() {
+    val barcode by lazy { stateHandle.getLiveData("BARCODE_VIEW_MODEL_BARCODE", "") }
+    val format by lazy { stateHandle.getLiveData("BARCODE_VIEW_MODEL_FORMAT", BarcodeFormat.QR_CODE) }
 }

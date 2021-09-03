@@ -6,6 +6,10 @@
     <data>
         <variable
             name="viewModel"
+            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
+
+        <variable
+            name="codeViewModel"
             type="com.taetae98.qrreader.viewmodel.CodeViewModel" />
     </data>
 
@@ -30,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/format_input_layout">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:text="@={viewModel.barcode}"
+                    android:text="@={codeViewModel.code}"
                     android:maxLines="10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

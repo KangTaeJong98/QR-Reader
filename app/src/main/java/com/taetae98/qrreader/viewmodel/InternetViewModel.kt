@@ -13,6 +13,6 @@ class InternetViewModel @Inject constructor(
         val PROTOCOLS by lazy { arrayOf("HTTP", "HTTPS") }
     }
 
-    val protocol by lazy { stateHandle.getLiveData("PROTOCOL", "") }
-    val address by lazy { stateHandle.getLiveData("ADDRESS", "") }
+    val protocol by lazy { stateHandle.getLiveData("INTERNET_VIEW_MODEL_PROTOCOL", PROTOCOLS.first()) }
+    val address by lazy { stateHandle.getLiveData("INTERNET_VIEW_MODEL_ADDRESS", "") }
 }

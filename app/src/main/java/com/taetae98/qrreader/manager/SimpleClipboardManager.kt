@@ -26,8 +26,8 @@ class SimpleClipboardManager @Inject constructor(
         )
     }
 
-    fun copyBarcode(label: String = "", code: String = "", formant: BarcodeFormat = BarcodeFormat.QR_CODE): Uri {
-        return internalStorageManager.saveBitmap(code.toBarcode(formant)).also {
+    fun copyBarcode(label: String = "", barcode: String = "", formant: BarcodeFormat = BarcodeFormat.QR_CODE): Uri {
+        return internalStorageManager.saveBitmap(barcode.toBarcode(formant)).also {
             manager.setPrimaryClip(
                 ClipData.newUri(
                     activity.contentResolver, label, it

@@ -17,7 +17,7 @@ class GenerateFragment : BindingFragment<FragmentGenerateBinding>(R.layout.fragm
         object : FragmentStateAdapter(this) {
             private val array by lazy {
                 arrayOf<Fragment>(
-                    TextFragment(),
+                    CodeFragment(),
                     InternetFragment(), WiFiFragment(), LocationFragment(),
                     TelFragment(), MessageFragment(), ContactFragment(),
                     CalendarFragment(), EmailFragment()

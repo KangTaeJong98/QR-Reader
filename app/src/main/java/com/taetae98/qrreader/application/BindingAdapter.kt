@@ -7,8 +7,8 @@ import com.taetae98.qrreader.view.BarcodeView
 object BindingAdapter {
     @JvmStatic
     @BindingAdapter(value = ["barcode", "format"], requireAll = false)
-    fun barcode(view: BarcodeView, barcode: String = " ", format: BarcodeFormat = BarcodeFormat.QR_CODE) {
-        view.code = barcode
+    fun barcode(view: BarcodeView, barcode: String = "", format: BarcodeFormat = BarcodeFormat.QR_CODE) {
+        view.barcode = barcode
         view.format = format
     }
 }
