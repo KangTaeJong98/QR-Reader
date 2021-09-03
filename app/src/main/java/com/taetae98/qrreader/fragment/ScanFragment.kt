@@ -55,6 +55,7 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
     private fun onScan() {
         onScanResult.launch(IntentIntegrator.forSupportFragment(this).apply {
             setPrompt("")
+            setOrientationLocked(false)
             setBeepEnabled(false)
         }.createScanIntent())
     }

@@ -15,74 +15,60 @@
             type="android.view.View.OnClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout"
         android:background="?attr/colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/scroll_view"
-            tools:title="@string/scan" />
-        <ScrollView
-            android:id="@+id/scroll_view"
-            android:fillViewport="true"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" >
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <com.taetae98.qrreader.view.BarcodeView
-                    android:id="@+id/barcode_view"
-                    app:barcode="@{viewModel.barcode}"
-                    app:format="@{viewModel.format}"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/qr_text_view"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:title="@string/scan" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/qr_text_view"
-                    android:text="@{viewModel.barcode}"
-                    android:textSize="18sp"
-                    android:textColor="?attr/colorSecondary"
-                    android:gravity="center"
-                    android:layout_margin="50dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/barcode_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="Code"/>
+            <com.taetae98.qrreader.view.BarcodeView
+                android:id="@+id/barcode_view"
+                app:barcode="@{viewModel.barcode}"
+                app:format="@{viewModel.format}"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_margin="50dp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:onClick="@{onScan}"
-                    android:src="@drawable/ic_round_qr_code_scanner_24"
-                    android:contentDescription="@string/scan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/floating_action_button_margin"
-                    app:backgroundTint="?attr/colorPrimary"
-                    app:layout_constraintVertical_bias="1"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintTop_toBottomOf="@id/qr_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/qr_text_view"
+                android:text="@{viewModel.barcode}"
+                android:textSize="18sp"
+                android:textColor="?attr/colorSecondary"
+                android:gravity="center"
+                android:layout_margin="50dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/barcode_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Code"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:onClick="@{onScan}"
+            android:src="@drawable/ic_round_qr_code_scanner_24"
+            android:contentDescription="@string/scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/floating_action_button_margin"
+            app:layout_anchor="@id/content_layout"
+            app:layout_anchorGravity="bottom|end"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
