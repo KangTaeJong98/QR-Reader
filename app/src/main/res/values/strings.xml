@@ -43,4 +43,10 @@
     <string name="hidden">Hidden</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="action">Action</string>
+    <string name="map">Map</string>
+    <string name="my_location">My Location</string>
+    <string name="loading_location">Loading Location</string>
+    <string name="refresh">Refresh</string>
+    <string name="close">Close</string>
 </resources>
