@@ -75,7 +75,7 @@ class BarcodeView @JvmOverloads constructor(
 
     var barcode = context.getString(R.string.app_url)
         set(value) {
-            Log.d(TAG, value)
+            Log.d(TAG, "BarcodeView Barcode : $value")
             field = value
             imageView.setImageBitmap(value.toBarcode(format))
         }
