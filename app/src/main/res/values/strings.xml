@@ -2,6 +2,7 @@
 <!--    System-->
     <string name="app_name">QR Reader</string>
     <string name="file_provider">FileProvider</string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=com.taetae98.qrreader</string>
 
 
 <!--    Word-->
@@ -36,4 +37,8 @@
     <string name="format">Format</string>
     <string name="address">Address</string>
     <string name="protocol">Protocol</string>
+    <string name="ssid">SSID</string>
+    <string name="encryption">Encryption</string>
+    <string name="password">Password</string>
+    <string name="hidden">Hidden</string>
 </resources>
