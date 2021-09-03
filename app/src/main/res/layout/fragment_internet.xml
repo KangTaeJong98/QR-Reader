@@ -34,8 +34,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/protocol_input_layout">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
                     android:text="@={internetViewModel.address}"
-                    android:maxLines="10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

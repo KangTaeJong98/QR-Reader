@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.taetae98.module.binding.BindingFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentInternetBinding
+import com.taetae98.qrreader.enums.InternetProtocol
 import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import com.taetae98.qrreader.viewmodel.InternetViewModel
@@ -29,19 +30,19 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
 
     private fun onObserveProtocol() {
         internetViewModel.protocol.observe(viewLifecycleOwner) {
-            barcodeViewModel.barcode.value = "${it.lowercase()}://${internetViewModel.address.value}"
+            barcodeViewModel.barcode.value = internetViewModel.toBarcode()
         }
     }
 
     private fun onObserveAddress() {
         internetViewModel.address.observe(viewLifecycleOwner) {
-            barcodeViewModel.barcode.value = "${internetViewModel.protocol.value?.lowercase()}://$it"
+            barcodeViewModel.barcode.value = internetViewModel.toBarcode()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        onCreateFormatInputLayout()
+        onCreateProtocolInputLayout()
 
         return binding.root
     }
@@ -52,21 +53,22 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
         binding.internetViewModel = internetViewModel
     }
 
-    private fun onCreateFormatInputLayout() {
+    private fun onCreateProtocolInputLayout() {
         with(binding.protocolInputLayout.editText as AutoCompleteTextView) {
+            val values = InternetProtocol.values()
             setAdapter(
                 ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_dropdown_item,
-                    InternetViewModel.PROTOCOLS
+                    values.map { it.name }
                 )
             )
 
             setOnItemClickListener { _, _, i, _ ->
-                internetViewModel.protocol.value = InternetViewModel.PROTOCOLS[i]
+                internetViewModel.protocol.value = values[i]
             }
 
-            setText(internetViewModel.protocol.value, false)
+            setText(internetViewModel.protocol.value?.name, false)
         }
     }
 }

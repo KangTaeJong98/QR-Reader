@@ -8,7 +8,7 @@ const val TAG = "QR_LOG"
 
 fun String.toBarcode(format: BarcodeFormat = BarcodeFormat.QR_CODE, width: Int = 500, height: Int = 500): Bitmap {
     return try {
-        BarcodeEncoder().encodeBitmap(this, format, width, height)
+        BarcodeEncoder().encodeBitmap(toByteArray().toString(Charsets.ISO_8859_1), format, width, height)
     } catch (e: Exception) {
         Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8)
     }

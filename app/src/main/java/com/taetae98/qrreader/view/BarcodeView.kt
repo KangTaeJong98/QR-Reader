@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.Toast
 import androidx.print.PrintHelper
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.zxing.BarcodeFormat
 import com.taetae98.qrreader.R
+import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.application.toBarcode
 import com.taetae98.qrreader.handler.BarcodeActionHandler
 import com.taetae98.qrreader.manager.InternalStorageManager
@@ -71,8 +73,9 @@ class BarcodeView @JvmOverloads constructor(
 
     var barcodeActionHandler: BarcodeActionHandler = BarcodeActionHandler.SimpleBarcodeActionHandler(context)
 
-    var barcode = ""
+    var barcode = context.getString(R.string.app_url)
         set(value) {
+            Log.d(TAG, value)
             field = value
             imageView.setImageBitmap(value.toBarcode(format))
         }
