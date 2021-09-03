@@ -22,6 +22,9 @@ abstract class BarcodeActionHandler {
                 scheme.equals("wifi", true) -> {
                     onWiFi(Uri.parse(barcode))
                 }
+                scheme.equals("geo", true) -> {
+                    onLocation(Uri.parse(barcode))
+                }
                 else -> {
                     onNothing(barcode)
                 }
@@ -35,6 +38,7 @@ abstract class BarcodeActionHandler {
     protected abstract fun onNothing(barcode: String)
     protected abstract fun onInternet(uri: Uri)
     protected abstract fun onWiFi(uri: Uri)
+    protected abstract fun onLocation(uri: Uri)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -54,6 +58,13 @@ abstract class BarcodeActionHandler {
             context.startActivity(Intent.createChooser(
                 Intent(Settings.ACTION_WIFI_SETTINGS),
                 context.getString(R.string.wifi)
+            ))
+        }
+
+        override fun onLocation(uri: Uri) {
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_VIEW, uri),
+                context.getString(R.string.location)
             ))
         }
     }

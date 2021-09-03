@@ -41,4 +41,6 @@
     <string name="encryption">Encryption</string>
     <string name="password">Password</string>
     <string name="hidden">Hidden</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 </resources>
