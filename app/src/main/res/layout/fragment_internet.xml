@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,64 +14,59 @@
             type="com.taetae98.qrreader.viewmodel.InternetViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="?attr/colorOnPrimary"
-        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
-                android:id="@+id/code_input_layout"
-                android:hint="@string/address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:endIconMode="clear_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/protocol_input_layout">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="text"
-                    android:text="@={internetViewModel.address}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/code_input_layout"
+            android:hint="@string/address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/protocol_input_layout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:text="@={internetViewModel.address}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.QRReader.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:id="@+id/protocol_input_layout"
-                android:hint="@string/protocol"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/code_input_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:focusable="false"
-                    android:clickable="false"
-                    android:cursorVisible="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:id="@+id/protocol_input_layout"
+            android:hint="@string/protocol"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/code_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:focusable="false"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.taetae98.qrreader.view.BarcodeView
-                android:id="@+id/barcode_view"
-                app:barcode="@{viewModel.barcode}"
-                app:format="@{viewModel.format}"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_margin="50dp"
-                app:cardBackgroundColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/protocol_input_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+        <com.taetae98.qrreader.view.BarcodeView
+            android:id="@+id/barcode_view"
+            app:barcode="@{viewModel.barcode}"
+            app:format="@{viewModel.format}"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_margin="50dp"
+            app:cardBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/protocol_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
