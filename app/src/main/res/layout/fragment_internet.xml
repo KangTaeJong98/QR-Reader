@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.taetae98.qrreader.viewmodel.CodeViewModel" />
+            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
 
         <variable
             name="internetViewModel"

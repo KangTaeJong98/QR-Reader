@@ -11,6 +11,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.zxing.BarcodeFormat
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.toBarcode
+import com.taetae98.qrreader.handler.BarcodeActionHandler
 import com.taetae98.qrreader.manager.InternalStorageManager
 import com.taetae98.qrreader.manager.SimpleClipboardManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,40 +24,40 @@ class BarcodeView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attrs, defStyleAttr) {
     private val imageView by lazy { ShapeableImageView(context, attrs, defStyleAttr) }
-    private val actionItems by lazy {
+    private val onLongClickItems by lazy {
         arrayOf(
-            BarcodeViewItem(context.getString(R.string.copy_image)) {
+            BarcodeViewActionItem(context.getString(R.string.copy_image)) {
                 simpleClipboardManager.copyBarcode(context.getString(R.string.barcode),
-                    code, format)
+                    barcode, format)
                 Toast.makeText(context, R.string.finish, Toast.LENGTH_SHORT).show()
             },
-            BarcodeViewItem(context.getString(R.string.copy_code)) {
+            BarcodeViewActionItem(context.getString(R.string.copy_code)) {
                 simpleClipboardManager.copyText(context.getString(R.string.code),
-                    code
+                    barcode
                 )
                 Toast.makeText(context, R.string.finish, Toast.LENGTH_SHORT).show()
             },
-            BarcodeViewItem(context.getString(R.string.share_image)) {
+            BarcodeViewActionItem(context.getString(R.string.share_image)) {
                 Intent(Intent.ACTION_SEND).apply {
                     type = "image/*"
-                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(code.toBarcode(format)))
+                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(barcode.toBarcode(format)))
                 }.also {
-                    context.startActivity(Intent.createChooser(it, code))
+                    context.startActivity(Intent.createChooser(it, barcode))
                 }
             },
-            BarcodeViewItem(context.getString(R.string.share_code)) {
+            BarcodeViewActionItem(context.getString(R.string.share_code)) {
                 Intent(Intent.ACTION_SEND).apply {
                     type = "text/*"
-                    putExtra(Intent.EXTRA_TEXT, code)
+                    putExtra(Intent.EXTRA_TEXT, barcode)
                 }.also {
-                    context.startActivity(Intent.createChooser(it, code))
+                    context.startActivity(Intent.createChooser(it, barcode))
                 }
             },
-            BarcodeViewItem(context.getString(R.string.print_code)) {
+            BarcodeViewActionItem(context.getString(R.string.print_code)) {
                 PrintHelper(context).apply {
                     scaleMode = PrintHelper.SCALE_MODE_FIT
                 }.also {
-                    it.printBitmap(context.getString(R.string.code), code.toBarcode(format))
+                    it.printBitmap(context.getString(R.string.code), barcode.toBarcode(format))
                 }
             }
         )
@@ -68,7 +69,9 @@ class BarcodeView @JvmOverloads constructor(
     @Inject
     lateinit var internalStorageManager: InternalStorageManager
 
-    var code = " "
+    var barcodeActionHandler: BarcodeActionHandler = BarcodeActionHandler.SimpleBarcodeActionHandler(context)
+
+    var barcode = ""
         set(value) {
             field = value
             imageView.setImageBitmap(value.toBarcode(format))
@@ -77,7 +80,7 @@ class BarcodeView @JvmOverloads constructor(
     var format = BarcodeFormat.QR_CODE
         set(value) {
             field = value
-            imageView.setImageBitmap(code.toBarcode(value))
+            imageView.setImageBitmap(barcode.toBarcode(value))
         }
 
 
@@ -88,21 +91,21 @@ class BarcodeView @JvmOverloads constructor(
         )
 
         setOnClickListener {
-
+            barcodeActionHandler.action(barcode)
         }
 
         setOnLongClickListener {
             AlertDialog.Builder(context)
-                .setItems(actionItems.map { it.text }.toTypedArray()) { _, i ->
-                    actionItems[i].action.invoke()
+                .setItems(onLongClickItems.map { it.text }.toTypedArray()) { _, i ->
+                    onLongClickItems[i].action.invoke()
                 }.show()
             true
         }
 
-        imageView.setImageBitmap(code.toBarcode(format))
+        imageView.setImageBitmap(barcode.toBarcode(format))
     }
 
-    data class BarcodeViewItem(
+    data class BarcodeViewActionItem(
         val text: String,
         val action: () -> Unit
     )

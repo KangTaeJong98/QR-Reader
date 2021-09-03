@@ -6,19 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.zxing.integration.android.IntentIntegrator
 import com.taetae98.module.binding.BindingFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentScanBinding
 import com.taetae98.qrreader.manager.SimpleClipboardManager
-import com.taetae98.qrreader.viewmodel.CodeViewModel
+import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan) {
-    private val codeViewModel by viewModels<CodeViewModel>()
+    private val barcodeViewModel by activityViewModels<BarcodeViewModel>()
 
     private val onScanResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -26,7 +26,7 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
         when(it.resultCode) {
             Activity.RESULT_OK -> {
                 IntentIntegrator.parseActivityResult(it.resultCode, it.data).also { result ->
-                    codeViewModel.barcode.value = result.contents
+                    barcodeViewModel.barcode.value = result.contents
                 }
             }
         }
@@ -44,7 +44,7 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = codeViewModel
+        binding.viewModel = barcodeViewModel
         binding.setOnScan { onScan() }
     }
 
