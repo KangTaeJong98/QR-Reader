@@ -1,17 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="barcodeViewModel"
+            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
 
+        <variable
+            name="contactViewModel"
+            type="com.taetae98.qrreader.viewmodel.ContactViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:text="@string/contact"
-            android:gravity="center"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="?attr/colorOnPrimary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/first_name_input_layout"
+                android:hint="@string/first_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/last_name_input_layout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:text="@={contactViewModel.firstName}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/last_name_input_layout"
+                android:hint="@string/last_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/first_name_input_layout"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:text="@={contactViewModel.lastName}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/mobile_tel_number_input_layout"
+                android:hint="@string/mobile_tel_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/first_name_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="phone"
+                    android:text="@={contactViewModel.mobileTelNumber}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/personal_tel_number_input_layout"
+                android:hint="@string/personal_tel_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/mobile_tel_number_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="phone"
+                    android:text="@={contactViewModel.personalTelNumber}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/personal_email_input_layout"
+                android:hint="@string/personal_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/personal_tel_number_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textEmailAddress"
+                    android:text="@={contactViewModel.personalEmail}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/web_site_input_layout"
+                android:hint="@string/web_site"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/personal_email_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:text="@={contactViewModel.webSite}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/company_input_layout"
+                android:hint="@string/company"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/web_site_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/company_position_input_layout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:text="@={contactViewModel.company}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/company_position_input_layout"
+                android:hint="@string/company_position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/web_site_input_layout"
+                app:layout_constraintStart_toEndOf="@id/company_input_layout"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:text="@={contactViewModel.companyPosition}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/company_tel_number_input_layout"
+                android:hint="@string/company_tel_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/company_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/company_email_input_layout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="phone"
+                    android:text="@={contactViewModel.companyTelNumber}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+                android:id="@+id/company_email_input_layout"
+                android:hint="@string/company_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/company_position_input_layout"
+                app:layout_constraintStart_toEndOf="@id/company_tel_number_input_layout"
+                app:layout_constraintEnd_toEndOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textEmailAddress"
+                    android:text="@={contactViewModel.companyEmail}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.taetae98.qrreader.view.BarcodeView
+                android:id="@+id/barcode_view"
+                app:barcode="@{barcodeViewModel.barcode}"
+                app:format="@{barcodeViewModel.format}"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_margin="50dp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/company_tel_number_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

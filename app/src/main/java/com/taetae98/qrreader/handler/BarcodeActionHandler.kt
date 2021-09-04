@@ -1,8 +1,10 @@
 package com.taetae98.qrreader.handler
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.ContactsContract
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -33,6 +35,9 @@ abstract class BarcodeActionHandler {
                 scheme.equals("smsto", true) -> {
                     onMessage(barcode)
                 }
+                scheme.equals("begin", true) -> {
+                    onContact(barcode)
+                }
                 else -> {
                     onNothing(barcode)
                 }
@@ -49,6 +54,7 @@ abstract class BarcodeActionHandler {
     protected abstract fun onLocation(barcode: String)
     protected abstract fun onTel(barcode: String)
     protected abstract fun onMessage(barcode: String)
+    protected abstract fun onContact(barcode: String)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -95,5 +101,118 @@ abstract class BarcodeActionHandler {
                 context.getString(R.string.message)
             ))
         }
+
+        override fun onContact(barcode: String) {
+            val data = ContactData()
+
+            barcode.split("\n").forEach { stream ->
+                when(stream.substringBefore(":").substringBefore(";")) {
+                    "FN" -> {
+                        stream.substringAfter(":").split(" ").also {
+                            data.firstName = it.getOrNull(0)
+                            data.lastName = it.getOrNull(1)
+                        }
+                    }
+                    "N" -> {
+                        stream.substringAfter(":").split(";").also {
+                            data.firstName = it.getOrNull(1)
+                            data.lastName = it.getOrNull(0)
+                        }
+                    }
+                    "TITLE" -> {
+                        data.companyPosition = stream.substringAfter(":")
+                    }
+                    "TEL" -> {
+                        when(stream.substringAfter(";").substringBefore(";")) {
+                            "HOME" -> {
+                                data.personalTelNumber = stream.substringAfterLast(":")
+                            }
+                            "CELL" -> {
+                                data.mobileTelNumber = stream.substringAfterLast(":")
+                            }
+                            "WORK" -> {
+                                data.companyTelNumber = stream.substringAfterLast(":")
+                            }
+                        }
+                    }
+                    "EMAIL" -> {
+                        when(stream.substringAfter(";").substringBefore(";")) {
+                            "HOME" -> {
+                                data.personalEmail = stream.substringAfterLast(":")
+                            }
+                            "WORK" -> {
+                                data.companyEmail = stream.substringAfterLast(":")
+                            }
+                        }
+                    }
+                    "URL" -> {
+                        data.webSite = stream.substringAfterLast(":")
+                    }
+                    "ORG" -> {
+                        data.company = stream.substringAfterLast(":")
+                    }
+                }
+            }
+
+            Log.d("PASS", data.toString())
+
+            val extras = ArrayList<ContentValues>().apply {
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_HOME)
+                    put(ContactsContract.CommonDataKinds.Email.ADDRESS, data.personalEmail)
+                })
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                    put(ContactsContract.CommonDataKinds.Email.ADDRESS, data.companyEmail)
+                })
+
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                    put(ContactsContract.CommonDataKinds.Phone.NUMBER, data.mobileTelNumber)
+                })
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_HOME)
+                    put(ContactsContract.CommonDataKinds.Phone.NUMBER, data.personalTelNumber)
+                })
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
+                    put(ContactsContract.CommonDataKinds.Phone.NUMBER, data.companyTelNumber)
+                })
+
+                add(ContentValues().apply {
+                    put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
+                    put(ContactsContract.CommonDataKinds.Website.TYPE, ContactsContract.CommonDataKinds.Website.TYPE_HOMEPAGE)
+                    put(ContactsContract.CommonDataKinds.Website.DATA, data.webSite)
+                })
+            }
+
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI).apply {
+                    putExtra(ContactsContract.Intents.Insert.NAME, "${data.firstName} ${data.lastName}")
+                    putExtra(ContactsContract.Intents.Insert.COMPANY, data.company)
+                    putExtra(ContactsContract.Intents.Insert.JOB_TITLE, data.companyPosition)
+                    putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, extras)
+                },
+                context.getString(R.string.message)
+            ))
+        }
     }
+
+    data class ContactData(
+        var firstName: String? = null,
+        var lastName: String? = null,
+        var mobileTelNumber: String? = null,
+        var personalTelNumber: String? = null,
+        var personalEmail: String? = null,
+        var webSite: String? = null,
+        var company: String? = null,
+        var companyPosition: String? = null,
+        var companyTelNumber: String? = null,
+        var companyEmail: String? = null
+    )
 }
