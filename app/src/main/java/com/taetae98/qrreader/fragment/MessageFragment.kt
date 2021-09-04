@@ -39,7 +39,7 @@ class MessageFragment : BindingFragment<FragmentMessageBinding>(R.layout.fragmen
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.messageViewModel = messageViewModel
     }
 }

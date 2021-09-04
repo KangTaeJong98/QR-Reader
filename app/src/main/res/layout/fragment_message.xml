@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="barcodeViewModel"
             type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
 
         <variable
@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:inputType="textMultiLine"
-                android:maxLines="10"
+                android:maxLines="@integer/max_line"
                 android:text="@={messageViewModel.message}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -57,8 +57,8 @@
 
         <com.taetae98.qrreader.view.BarcodeView
             android:id="@+id/barcode_view"
-            app:barcode="@{viewModel.barcode}"
-            app:format="@{viewModel.format}"
+            app:barcode="@{barcodeViewModel.barcode}"
+            app:format="@{barcodeViewModel.format}"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_margin="50dp"

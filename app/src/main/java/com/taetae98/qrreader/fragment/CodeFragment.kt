@@ -51,7 +51,7 @@ class CodeFragment : BindingFragment<FragmentCodeBinding>(R.layout.fragment_code
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.codeViewModel = codeViewModel
     }
 

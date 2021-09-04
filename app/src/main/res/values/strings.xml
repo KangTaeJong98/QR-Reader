@@ -25,15 +25,8 @@
     <string name="code">Code</string>
     <string name="finish">Finish</string>
     <string name="barcode">Barcode</string>
-
-
-<!--    String-->
-    <string name="copy_image">Copy Image</string>
-    <string name="copy_text">Copy Text</string>
-    <string name="share_code">Share Code</string>
-    <string name="copy_code">Copy Code</string>
-    <string name="print_code">Print Code</string>
-    <string name="share_image">Share Image</string>
+    <string name="refresh">Refresh</string>
+    <string name="close">Close</string>
     <string name="format">Format</string>
     <string name="address">Address</string>
     <string name="protocol">Protocol</string>
@@ -45,9 +38,14 @@
     <string name="longitude">Longitude</string>
     <string name="action">Action</string>
     <string name="map">Map</string>
+
+<!--    String-->
+    <string name="share_image">Share Image</string>
+    <string name="copy_image">Copy Image</string>
+    <string name="share_code">Share Code</string>
+    <string name="copy_code">Copy Code</string>
+    <string name="print_image">Print Image</string>
     <string name="my_location">My Location</string>
     <string name="loading_location">Loading Location</string>
-    <string name="refresh">Refresh</string>
-    <string name="close">Close</string>
     <string name="tel_number">Tel Number</string>
 </resources>

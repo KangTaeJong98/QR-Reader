@@ -49,7 +49,7 @@ class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragm
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.internetViewModel = internetViewModel
     }
 
