@@ -44,7 +44,7 @@ class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.setOnScan { onScan() }
     }
 

@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/activity_main.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_calendar.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_code.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_generate.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_internet.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_location.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_message.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_scan.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Admin/Code/Git/QR-Reader/app/src/main/res/layout/fragment_tel.xml" value="0.1" />
         <entry key="..\:/Users/mcnc/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/mcnc/Desktop/Code/Git/QRReader/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38229166666666664" />

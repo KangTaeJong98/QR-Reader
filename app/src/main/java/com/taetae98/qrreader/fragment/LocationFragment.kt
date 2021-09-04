@@ -75,7 +75,7 @@ class LocationFragment : BindingFragment<FragmentLocationBinding>(R.layout.fragm
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
         binding.locationViewModel = locationViewModel
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.setOnLocation {
             if (requireContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED ||

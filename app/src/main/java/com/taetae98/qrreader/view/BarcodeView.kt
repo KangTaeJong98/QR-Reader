@@ -55,7 +55,7 @@ class BarcodeView @JvmOverloads constructor(
                     context.startActivity(Intent.createChooser(it, barcode))
                 }
             },
-            BarcodeViewActionItem(context.getString(R.string.print_code)) {
+            BarcodeViewActionItem(context.getString(R.string.print_image)) {
                 PrintHelper(context).apply {
                     scaleMode = PrintHelper.SCALE_MODE_FIT
                 }.also {
