@@ -21,7 +21,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Theme.QRReader.TextInputLayout.FilledBox"
             android:id="@+id/tel_input_layout"
-            android:hint="@string/tel"
+            android:hint="@string/tel_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:endIconMode="clear_text"

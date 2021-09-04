@@ -48,4 +48,14 @@
     <string name="my_location">My Location</string>
     <string name="loading_location">Loading Location</string>
     <string name="tel_number">Tel Number</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="personal_tel_number">Tel Number (Personal) </string>
+    <string name="mobile_tel_number">Tel Number (Mobile)</string>
+    <string name="personal_email">Email (Personal)</string>
+    <string name="web_site">Web Site</string>
+    <string name="company">Company</string>
+    <string name="company_position">Company Position</string>
+    <string name="company_tel_number">Tel Number (Company)</string>
+    <string name="company_email">Email (Company)</string>
 </resources>
