@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
+import com.taetae98.qrreader.enums.InternetProtocol
+import com.taetae98.qrreader.enums.WiFiEncryption
 
 abstract class BarcodeActionHandler {
     fun action(barcode: String) {
@@ -15,19 +17,21 @@ abstract class BarcodeActionHandler {
             Log.d(TAG, "Action Barcode : $barcode")
 
             val scheme = barcode.substringBefore(":")
-            Log.d(TAG, "Action Scheme : $scheme")
             when {
-                scheme.equals("https", true) -> {
-                    onInternet(Uri.parse(barcode))
+                scheme.equals("https", true) || scheme.equals("http", true) -> {
+                    onInternet(barcode)
                 }
                 scheme.equals("wifi", true) -> {
-                    onWiFi(Uri.parse(barcode))
+                    onWiFi(barcode)
                 }
                 scheme.equals("geo", true) -> {
-                    onLocation(Uri.parse(barcode))
+                    onLocation(barcode)
                 }
                 scheme.equals("tel", true) -> {
-                    onTel(Uri.parse(barcode))
+                    onTel(barcode)
+                }
+                scheme.equals("smsto", true) -> {
+                    onMessage(barcode)
                 }
                 else -> {
                     onNothing(barcode)
@@ -40,10 +44,11 @@ abstract class BarcodeActionHandler {
     }
 
     protected abstract fun onNothing(barcode: String)
-    protected abstract fun onInternet(uri: Uri)
-    protected abstract fun onWiFi(uri: Uri)
-    protected abstract fun onLocation(uri: Uri)
-    protected abstract fun onTel(uri: Uri)
+    protected abstract fun onInternet(barcode: String)
+    protected abstract fun onWiFi(barcode: String)
+    protected abstract fun onLocation(barcode: String)
+    protected abstract fun onTel(barcode: String)
+    protected abstract fun onMessage(barcode: String)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -52,31 +57,42 @@ abstract class BarcodeActionHandler {
             Toast.makeText(context, barcode, Toast.LENGTH_SHORT).show()
         }
 
-        override fun onInternet(uri: Uri) {
+        override fun onInternet(barcode: String) {
             context.startActivity(Intent.createChooser(
-                Intent(Intent.ACTION_VIEW, uri),
+                Intent(Intent.ACTION_VIEW, Uri.parse(barcode)),
                 context.getString(R.string.internet)
             ))
         }
 
-        override fun onWiFi(uri: Uri) {
+        override fun onWiFi(barcode: String) {
             context.startActivity(Intent.createChooser(
                 Intent(Settings.ACTION_WIFI_SETTINGS),
                 context.getString(R.string.wifi)
             ))
         }
 
-        override fun onLocation(uri: Uri) {
+        override fun onLocation(barcode: String) {
             context.startActivity(Intent.createChooser(
-                Intent(Intent.ACTION_VIEW, uri),
+                Intent(Intent.ACTION_VIEW, Uri.parse(barcode)),
                 context.getString(R.string.location)
             ))
         }
 
-        override fun onTel(uri: Uri) {
+        override fun onTel(barcode: String) {
             context.startActivity(Intent.createChooser(
-                Intent(Intent.ACTION_DIAL, uri),
+                Intent(Intent.ACTION_DIAL, Uri.parse(barcode)),
                 context.getString(R.string.tel)
+            ))
+        }
+
+        override fun onMessage(barcode: String) {
+            val uri = barcode.substringBeforeLast(":")
+            val message = barcode.substringAfterLast(":")
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_SEND, Uri.parse(uri)).apply {
+                    putExtra("sms_body", message)
+                },
+                context.getString(R.string.message)
             ))
         }
     }

@@ -3,6 +3,7 @@ package com.taetae98.qrreader.fragment
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.taetae98.module.binding.BindingFragment
 import com.taetae98.qrreader.R
+import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.databinding.FragmentLocationBinding
 import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.manager.SimpleLocationManager
@@ -30,8 +32,9 @@ class LocationFragment : BindingFragment<FragmentLocationBinding>(R.layout.fragm
     private val onRequestLocationPermission = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
-        for (isGranted in it.values) {
-            if (!isGranted) {
+        for (entry in it) {
+            if (!entry.value) {
+                Log.d(TAG, "${entry.key} : ${entry.value}")
                 return@registerForActivityResult
             }
         }
@@ -42,7 +45,7 @@ class LocationFragment : BindingFragment<FragmentLocationBinding>(R.layout.fragm
     private var isLoadingLocation = false
 
     @Inject
-    lateinit var simpleLocationMAnager: SimpleLocationManager
+    lateinit var simpleLocationManager: SimpleLocationManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,7 +106,7 @@ class LocationFragment : BindingFragment<FragmentLocationBinding>(R.layout.fragm
         }
         isLoadingLocation = true
 
-        simpleLocationMAnager.getUpdatedLocation {
+        simpleLocationManager.getUpdatedLocation {
             locationViewModel.latitude.value = it.latitude.toString()
             locationViewModel.longitude.value = it.longitude.toString()
 
