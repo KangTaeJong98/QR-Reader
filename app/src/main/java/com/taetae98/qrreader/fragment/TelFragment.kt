@@ -32,7 +32,7 @@ class TelFragment : BindingFragment<FragmentTelBinding>(R.layout.fragment_tel), 
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.telViewModel = telViewModel
     }
 }

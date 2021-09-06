@@ -50,6 +50,9 @@ abstract class BarcodeActionHandler {
                         }
                     }
                 }
+                scheme.equals("matmsg", true) -> {
+                    onEmail(barcode)
+                }
                 else -> {
                     onNothing(barcode)
                 }
@@ -68,6 +71,7 @@ abstract class BarcodeActionHandler {
     protected abstract fun onMessage(barcode: String)
     protected abstract fun onContact(barcode: String)
     protected abstract fun onCalendar(barcode: String)
+    protected abstract fun onEmail(barcode: String)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -209,7 +213,7 @@ abstract class BarcodeActionHandler {
                     putExtra(ContactsContract.Intents.Insert.JOB_TITLE, data.companyPosition)
                     putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, extras)
                 },
-                context.getString(R.string.message)
+                context.getString(R.string.contact)
             ))
         }
 
@@ -231,7 +235,7 @@ abstract class BarcodeActionHandler {
                     GregorianCalendar(year, month - 1, dayOfMonth, hour, minute, second).timeInMillis
                 }
             }
-Log.d(TAG, "PASS")
+
             barcode.split("\n").forEach { stream ->
                 when(stream.substringBefore(":").substringBefore(";")) {
                     "SUMMARY" -> {
@@ -256,8 +260,6 @@ Log.d(TAG, "PASS")
                 }
             }
 
-            Log.d(TAG, "Data : $data")
-
             context.startActivity(Intent.createChooser(
                 Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI).apply {
                     putExtra(CalendarContract.Events.TITLE, data.title)
@@ -267,7 +269,22 @@ Log.d(TAG, "PASS")
                     putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, data.begin)
                     putExtra(CalendarContract.EXTRA_EVENT_END_TIME, data.end)
                 },
-                context.getString(R.string.message)
+                context.getString(R.string.calendar)
+            ))
+        }
+
+        override fun onEmail(barcode: String) {
+            val email = barcode.substringAfter("TO:").substringBefore(";")
+            val title = barcode.substringAfter("SUB:").substringBefore(";")
+            val message = barcode.substringAfter("BODY:").substringBeforeLast(";").substringBeforeLast(";")
+
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).apply {
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                    putExtra(Intent.EXTRA_SUBJECT, title)
+                    putExtra(Intent.EXTRA_TEXT, message)
+                },
+                context.getString(R.string.email)
             ))
         }
     }
