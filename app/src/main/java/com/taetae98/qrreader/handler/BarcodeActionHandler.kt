@@ -4,21 +4,24 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.CalendarContract
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import com.google.zxing.qrcode.QRCodeReader
+import com.google.zxing.qrcode.decoder.QRCodeDecoderMetaData
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
-import com.taetae98.qrreader.enums.InternetProtocol
-import com.taetae98.qrreader.enums.WiFiEncryption
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class BarcodeActionHandler {
     fun action(barcode: String) {
         try {
             Log.d(TAG, "Action Barcode : $barcode")
 
-            val scheme = barcode.substringBefore(":")
+            val scheme = barcode.substringBefore(":").trim()
             when {
                 scheme.equals("https", true) || scheme.equals("http", true) -> {
                     onInternet(barcode)
@@ -36,7 +39,16 @@ abstract class BarcodeActionHandler {
                     onMessage(barcode)
                 }
                 scheme.equals("begin", true) -> {
-                    onContact(barcode)
+                    val query = barcode.substringBefore("\n").substringAfter(":").trim()
+                    Log.d(TAG, "Query : $query")
+                    when {
+                        query.equals("VCARD", true) -> {
+                            onContact(barcode)
+                        }
+                        query.equals("VEVENT", true) -> {
+                            onCalendar(barcode)
+                        }
+                    }
                 }
                 else -> {
                     onNothing(barcode)
@@ -55,6 +67,7 @@ abstract class BarcodeActionHandler {
     protected abstract fun onTel(barcode: String)
     protected abstract fun onMessage(barcode: String)
     protected abstract fun onContact(barcode: String)
+    protected abstract fun onCalendar(barcode: String)
 
     open class SimpleBarcodeActionHandler(
         private val context: Context
@@ -154,8 +167,6 @@ abstract class BarcodeActionHandler {
                 }
             }
 
-            Log.d("PASS", data.toString())
-
             val extras = ArrayList<ContentValues>().apply {
                 add(ContentValues().apply {
                     put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
@@ -201,6 +212,64 @@ abstract class BarcodeActionHandler {
                 context.getString(R.string.message)
             ))
         }
+
+        override fun onCalendar(barcode: String) {
+            val data = CalendarData()
+
+            val toMillis = lambda@{ date: String, isAllDay: Boolean ->
+                val calendar = GregorianCalendar()
+                val year = try { date.substring(0..3).toInt() } catch (e: Exception) { calendar[Calendar.YEAR] }
+                val month = try { date.substring(4..5).toInt() } catch (e: Exception) { calendar[Calendar.MONTH]}
+                val dayOfMonth = try { date.substring(6..7).toInt() } catch (e: Exception) { calendar[Calendar.DAY_OF_MONTH]}
+                val hour = try { date.substring(9..10).toInt() } catch (e: Exception) { calendar[Calendar.HOUR_OF_DAY]}
+                val minute = try { date.substring(11..12).toInt() } catch (e: Exception) { calendar[Calendar.MINUTE] }
+                val second = try { date.substring(13..14).toInt() } catch (e: Exception) { calendar[Calendar.SECOND]}
+
+                return@lambda if (isAllDay) {
+                    GregorianCalendar(year, month - 1, dayOfMonth).timeInMillis
+                } else {
+                    GregorianCalendar(year, month - 1, dayOfMonth, hour, minute, second).timeInMillis
+                }
+            }
+Log.d(TAG, "PASS")
+            barcode.split("\n").forEach { stream ->
+                when(stream.substringBefore(":").substringBefore(";")) {
+                    "SUMMARY" -> {
+                        data.title = stream.substringAfter(":")
+                    }
+                    "DTSTART" -> {
+                        data.allDay = stream.contains("VALUE=DATE")
+                        val date = stream.substringAfterLast(":").substringAfterLast(";").substringAfterLast("VALUE=")
+                        data.begin = toMillis(date, data.allDay!!)
+                    }
+                    "DTEND" -> {
+                        data.allDay = stream.contains("VALUE=DATE")
+                        val date = stream.substringAfterLast(":").substringAfterLast(";").substringAfterLast("VALUE=")
+                        data.end = toMillis(date, data.allDay!!)
+                    }
+                    "LOCATION" -> {
+                        data.location = stream.substringAfter(":")
+                    }
+                    "DESCRIPTION" -> {
+                        data.description = stream.substringAfter(":")
+                    }
+                }
+            }
+
+            Log.d(TAG, "Data : $data")
+
+            context.startActivity(Intent.createChooser(
+                Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI).apply {
+                    putExtra(CalendarContract.Events.TITLE, data.title)
+                    putExtra(CalendarContract.Events.DESCRIPTION, data.description)
+                    putExtra(CalendarContract.Events.EVENT_LOCATION, data.location)
+                    putExtra(CalendarContract.Events.ALL_DAY, data.allDay)
+                    putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, data.begin)
+                    putExtra(CalendarContract.EXTRA_EVENT_END_TIME, data.end)
+                },
+                context.getString(R.string.message)
+            ))
+        }
     }
 
     data class ContactData(
@@ -214,5 +283,14 @@ abstract class BarcodeActionHandler {
         var companyPosition: String? = null,
         var companyTelNumber: String? = null,
         var companyEmail: String? = null
+    )
+
+    data class CalendarData(
+        var title: String? = null,
+        var begin: Long? = null,
+        var end: Long? = null,
+        var location: String? = null,
+        var description: String? = null,
+        var allDay: Boolean? = null
     )
 }
