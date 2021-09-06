@@ -58,4 +58,11 @@
     <string name="company_position">Company Position</string>
     <string name="company_tel_number">Tel Number (Company)</string>
     <string name="company_email">Email (Company)</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="all_day">All Day</string>
+    <string name="begin_date">Begin Date</string>
+    <string name="begin_time">Begin Time</string>
+    <string name="end_date">End Date</string>
+    <string name="end_time">End Time</string>
 </resources>

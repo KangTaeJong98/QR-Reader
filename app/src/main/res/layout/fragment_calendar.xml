@@ -1,17 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
+        <variable
+            name="barcodeViewModel"
+            type="com.taetae98.qrreader.viewmodel.BarcodeViewModel" />
+
+        <variable
+            name="calendarViewModel"
+            type="com.taetae98.qrreader.viewmodel.CalendarViewModel" />
+
+        <variable
+            name="onBeginDate"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onBeginTime"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onEndDate"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onEndTime"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="?attr/colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:text="@string/calendar"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/title_input_layout"
+            android:hint="@string/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:text="@={calendarViewModel.title}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/description_input_layout"
+            android:hint="@string/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/title_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:text="@={calendarViewModel.description}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/location_input_layout"
+            android:hint="@string/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/description_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:text="@={calendarViewModel.location}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/begin_date_input_layout"
+            android:hint="@string/begin_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/location_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/begin_time_input_layout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:onClick="@{onBeginDate}"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:textAlignment="center"
+                android:text="@{String.format(`%04d`, calendarViewModel.beginYear) + '-' + String.format(`%02d`, calendarViewModel.beginMonth + 1) + '-' + String.format(`%02d`, calendarViewModel.beginDayOfMonth)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/begin_time_input_layout"
+            android:hint="@string/begin_time"
+            android:visibility="@{calendarViewModel.allDay ? View.GONE : View.VISIBLE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/location_input_layout"
+            app:layout_constraintStart_toEndOf="@id/begin_date_input_layout"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@{String.format(`%02d`, calendarViewModel.beginHourOfDay) + ':' + String.format(`%02d`, calendarViewModel.beginMinute)}"
+                android:textAlignment="center"
+                android:onClick="@{onBeginTime}"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/end_date_input_layout"
+            android:hint="@string/end_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/begin_date_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/end_time_input_layout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@{String.format(`%04d`, calendarViewModel.endYear) + '-' + String.format(`%02d`, calendarViewModel.endMonth + 1) + '-' + String.format(`%02d`, calendarViewModel.endDayOfMonth)}"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:onClick="@{onEndDate}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.QRReader.TextInputLayout.FilledBox"
+            android:id="@+id/end_time_input_layout"
+            android:hint="@string/end_time"
+            android:visibility="@{calendarViewModel.allDay ? View.GONE : View.VISIBLE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/begin_time_input_layout"
+            app:layout_constraintStart_toEndOf="@id/end_date_input_layout"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@{String.format(`%02d`, calendarViewModel.endHourOfDay) + ':' + String.format(`%02d`, calendarViewModel.endMinute)}"
+                android:textAlignment="center"
+                android:onClick="@{onEndTime}"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/all_day_switch"
+            android:checked="@={calendarViewModel.allDay}"
+            android:text="@string/all_day"
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toBottomOf="@id/end_date_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.taetae98.qrreader.view.BarcodeView
+            android:id="@+id/barcode_view"
+            app:barcode="@{barcodeViewModel.barcode}"
+            app:format="@{barcodeViewModel.format}"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_margin="50dp"
+            app:cardBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/all_day_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
