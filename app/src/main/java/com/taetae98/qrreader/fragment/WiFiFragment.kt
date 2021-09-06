@@ -65,7 +65,7 @@ class WiFiFragment : BindingFragment<FragmentWifiBinding>(R.layout.fragment_wifi
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
-        binding.viewModel = barcodeViewModel
+        binding.barcodeViewModel = barcodeViewModel
         binding.wifiViewModel = wifiViewModel
     }
 
