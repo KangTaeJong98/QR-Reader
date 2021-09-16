@@ -9,7 +9,7 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.zxing.BarcodeFormat
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentCodeBinding
 import com.taetae98.qrreader.interfaces.TabComponent
@@ -18,7 +18,7 @@ import com.taetae98.qrreader.viewmodel.CodeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CodeFragment : BindingFragment<FragmentCodeBinding>(R.layout.fragment_code), TabComponent {
+class CodeFragment : NavigationFragment<FragmentCodeBinding>(R.layout.fragment_code), TabComponent {
     override val tabIcon = R.drawable.ic_round_text_fields_24
 
     private val codeViewModel by activityViewModels<CodeViewModel>()

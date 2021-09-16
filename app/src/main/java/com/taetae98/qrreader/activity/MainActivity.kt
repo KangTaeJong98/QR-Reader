@@ -2,7 +2,7 @@ package com.taetae98.qrreader.activity
 
 import android.os.Bundle
 import androidx.navigation.ui.setupWithNavController
-import com.taetae98.module.navigation.NavigationActivity
+import com.taetae98.modules.library.navigation.NavigationActivity
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint

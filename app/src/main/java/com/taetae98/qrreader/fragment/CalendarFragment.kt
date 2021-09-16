@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.databinding.FragmentCalendarBinding
@@ -15,10 +15,9 @@ import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import com.taetae98.qrreader.viewmodel.CalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class CalendarFragment : BindingFragment<FragmentCalendarBinding>(R.layout.fragment_calendar), TabComponent {
+class CalendarFragment : NavigationFragment<FragmentCalendarBinding>(R.layout.fragment_calendar), TabComponent {
     override val tabIcon = R.drawable.ic_round_calendar_today_24
 
     private val barcodeViewModel by viewModels<BarcodeViewModel>()

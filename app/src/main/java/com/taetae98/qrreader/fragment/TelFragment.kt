@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentTelBinding
 import com.taetae98.qrreader.interfaces.TabComponent
@@ -13,7 +13,7 @@ import com.taetae98.qrreader.viewmodel.TelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TelFragment : BindingFragment<FragmentTelBinding>(R.layout.fragment_tel), TabComponent {
+class TelFragment : NavigationFragment<FragmentTelBinding>(R.layout.fragment_tel), TabComponent {
     override val tabIcon = R.drawable.ic_round_call_24
 
     private val telViewModel by activityViewModels<TelViewModel>()

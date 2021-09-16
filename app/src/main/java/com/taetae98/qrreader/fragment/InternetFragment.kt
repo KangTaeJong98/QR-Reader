@@ -8,15 +8,17 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentInternetBinding
 import com.taetae98.qrreader.enums.InternetProtocol
 import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import com.taetae98.qrreader.viewmodel.InternetViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class InternetFragment : BindingFragment<FragmentInternetBinding>(R.layout.fragment_internet), TabComponent {
+@AndroidEntryPoint
+class InternetFragment : NavigationFragment<FragmentInternetBinding>(R.layout.fragment_internet), TabComponent {
     override val tabIcon = R.drawable.ic_round_public_24
 
     private val internetViewModel by activityViewModels<InternetViewModel>()

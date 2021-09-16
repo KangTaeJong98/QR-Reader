@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentContactBinding
 import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import com.taetae98.qrreader.viewmodel.ContactViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class ContactFragment : BindingFragment<FragmentContactBinding>(R.layout.fragment_contact), TabComponent {
+@AndroidEntryPoint
+class ContactFragment : NavigationFragment<FragmentContactBinding>(R.layout.fragment_contact), TabComponent {
     override val tabIcon = R.drawable.ic_round_perm_contact_calendar_24
 
     private val barcodeViewModel by viewModels<BarcodeViewModel>()
