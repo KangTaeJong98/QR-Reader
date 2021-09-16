@@ -5,6 +5,7 @@ import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
 const val TAG = "QR_LOG"
+const val DATABASE_NAME = "barcode.db"
 
 fun String.toBarcode(format: BarcodeFormat = BarcodeFormat.QR_CODE, width: Int = 500, height: Int = 500): Bitmap {
     return try {
