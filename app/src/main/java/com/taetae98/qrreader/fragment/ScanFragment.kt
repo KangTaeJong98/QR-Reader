@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.google.zxing.integration.android.IntentIntegrator
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentScanBinding
 import com.taetae98.qrreader.manager.SimpleClipboardManager
@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScanFragment : BindingFragment<FragmentScanBinding>(R.layout.fragment_scan) {
+class ScanFragment : NavigationFragment<FragmentScanBinding>(R.layout.fragment_scan) {
     private val barcodeViewModel by activityViewModels<BarcodeViewModel>()
 
     private val onScanResult = registerForActivityResult(

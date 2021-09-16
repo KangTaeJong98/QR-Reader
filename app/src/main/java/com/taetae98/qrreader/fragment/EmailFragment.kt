@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentEmailBinding
 import com.taetae98.qrreader.interfaces.TabComponent
@@ -13,7 +13,7 @@ import com.taetae98.qrreader.viewmodel.EmailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EmailFragment : BindingFragment<FragmentEmailBinding>(R.layout.fragment_email), TabComponent {
+class EmailFragment : NavigationFragment<FragmentEmailBinding>(R.layout.fragment_email), TabComponent {
     override val tabIcon = R.drawable.ic_round_email_24
 
     private val barcodeViewModel by viewModels<BarcodeViewModel>()

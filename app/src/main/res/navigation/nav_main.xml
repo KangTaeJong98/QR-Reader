@@ -15,4 +15,9 @@
         android:name="com.taetae98.qrreader.fragment.GenerateFragment"
         android:label="@string/generate"
         tools:layout="@layout/fragment_generate"/>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.taetae98.qrreader.fragment.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history"/>
 </navigation>

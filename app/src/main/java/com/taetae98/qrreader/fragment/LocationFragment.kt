@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.databinding.FragmentLocationBinding
@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LocationFragment : BindingFragment<FragmentLocationBinding>(R.layout.fragment_location), TabComponent {
+class LocationFragment : NavigationFragment<FragmentLocationBinding>(R.layout.fragment_location), TabComponent {
     override val tabIcon = R.drawable.ic_round_location_on_24
 
     private val locationViewModel by activityViewModels<LocationViewModel>()

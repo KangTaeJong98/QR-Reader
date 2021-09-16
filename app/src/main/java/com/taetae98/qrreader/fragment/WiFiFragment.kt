@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.taetae98.module.binding.BindingFragment
+import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentWifiBinding
 import com.taetae98.qrreader.enums.WiFiEncryption
@@ -18,7 +18,7 @@ import com.taetae98.qrreader.viewmodel.WiFiViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WiFiFragment : BindingFragment<FragmentWifiBinding>(R.layout.fragment_wifi), TabComponent {
+class WiFiFragment : NavigationFragment<FragmentWifiBinding>(R.layout.fragment_wifi), TabComponent {
     override val tabIcon = R.drawable.ic_round_wifi_24
 
     private val wifiViewModel by activityViewModels<WiFiViewModel>()

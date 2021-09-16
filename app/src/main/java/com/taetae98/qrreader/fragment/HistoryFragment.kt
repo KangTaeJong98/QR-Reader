@@ -9,20 +9,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
-import com.taetae98.qrreader.databinding.FragmentGenerateBinding
+import com.taetae98.qrreader.databinding.FragmentHistoryBinding
 import com.taetae98.qrreader.interfaces.TabComponent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GenerateFragment : NavigationFragment<FragmentGenerateBinding>(R.layout.fragment_generate) {
+class HistoryFragment : NavigationFragment<FragmentHistoryBinding>(R.layout.fragment_history) {
     private val viewPagerAdapter by lazy {
         object : FragmentStateAdapter(this) {
             private val array by lazy {
                 arrayOf<Fragment>(
-                    CodeFragment(),
-                    InternetFragment(), WiFiFragment(), LocationFragment(),
-                    TelFragment(), MessageFragment(), ContactFragment(),
-                    CalendarFragment(), EmailFragment()
+                    LogFragment(), BookmarkFragment()
                 )
             }
 
