@@ -11,6 +11,6 @@ interface BarcodeDataDao : BaseDao<BarcodeData> {
     @Query("SELECT * FROM BarcodeData ORDER BY time DESC")
     fun findAllLiveData(): LiveData<List<BarcodeData>>
 
-    @Query("SELECT * FROM BarcodeData WHERE isBookmarked = 1")
+    @Query("SELECT * FROM BarcodeData WHERE isBookmarked = 1 ORDER BY time DESC")
     fun findIsBookmarkedLiveData(): LiveData<List<BarcodeData>>
 }
