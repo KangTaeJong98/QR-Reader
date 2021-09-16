@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    getInstance(context).barcodeData().insert(
+                                    getInstance(context).barcodeDataDao().insert(
                                         BarcodeData(
                                             barcode = "https://play.google.com/store/apps/details?id=com.taetae98.qrreader",
                                             name = "Application",
@@ -45,5 +45,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun barcodeData(): BarcodeDataDao
+    abstract fun barcodeDataDao(): BarcodeDataDao
 }
