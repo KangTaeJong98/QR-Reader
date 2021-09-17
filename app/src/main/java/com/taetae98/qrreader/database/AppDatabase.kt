@@ -4,15 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.taetae98.qrreader.application.DATABASE_NAME
+import com.taetae98.qrreader.database.converter.BarcodeDataTypeConverter
 import com.taetae98.qrreader.database.dao.BarcodeDataDao
 import com.taetae98.qrreader.dto.BarcodeData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [BarcodeData::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        BarcodeData::class
+    ],
+    version = 1,
+    exportSchema = true,
+)
+@TypeConverters(BarcodeDataTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile

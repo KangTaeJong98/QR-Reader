@@ -8,8 +8,9 @@ const val TAG = "QR_LOG"
 const val DATABASE_NAME = "barcode.db"
 
 fun String.toBarcode(format: BarcodeFormat = BarcodeFormat.QR_CODE, width: Int = 500, height: Int = 500): Bitmap {
+    val barcode = if (isBlank()) " " else this
     return try {
-        BarcodeEncoder().encodeBitmap(toByteArray().toString(Charsets.ISO_8859_1), format, width, height)
+        BarcodeEncoder().encodeBitmap(barcode.toByteArray().toString(Charsets.ISO_8859_1), format, width, height)
     } catch (e: Exception) {
         Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8)
     }

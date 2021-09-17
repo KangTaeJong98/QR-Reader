@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.Toast
 import androidx.print.PrintHelper
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.zxing.BarcodeFormat
 import com.taetae98.qrreader.R
@@ -24,8 +23,7 @@ class BarcodeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : MaterialCardView(context, attrs, defStyleAttr) {
-    private val imageView by lazy { ShapeableImageView(context, attrs, defStyleAttr) }
+) : ShapeableImageView(context, attrs, defStyleAttr) {
     private val onLongClickItems by lazy {
         arrayOf(
             BarcodeViewActionItem(context.getString(R.string.copy_image)) {
@@ -77,22 +75,17 @@ class BarcodeView @JvmOverloads constructor(
         set(value) {
             Log.d(TAG, "BarcodeView Barcode : $value")
             field = value
-            imageView.setImageBitmap(value.toBarcode(format))
+            setImageBitmap(value.toBarcode(format))
         }
 
     var format = BarcodeFormat.QR_CODE
         set(value) {
             field = value
-            imageView.setImageBitmap(barcode.toBarcode(value))
+            setImageBitmap(barcode.toBarcode(value))
         }
 
 
     init {
-        addView(
-            imageView,
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        )
-
         setOnClickListener {
             barcodeActionHandler.action(barcode)
         }
@@ -105,7 +98,7 @@ class BarcodeView @JvmOverloads constructor(
             true
         }
 
-        imageView.setImageBitmap(barcode.toBarcode(format))
+        setImageBitmap(barcode.toBarcode(format))
     }
 
     data class BarcodeViewActionItem(

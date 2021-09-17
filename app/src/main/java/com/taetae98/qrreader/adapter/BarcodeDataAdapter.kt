@@ -2,6 +2,7 @@ package com.taetae98.qrreader.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import com.taetae98.modules.library.base.BaseViewHolder
 import com.taetae98.modules.library.binding.BindingRecyclerViewAdapter
@@ -31,6 +32,11 @@ class BarcodeDataAdapter : BindingRecyclerViewAdapter<BarcodeData>(diffCallback)
     }
 
     inner class BarcodeDataViewHolder(binding: HolderBarcodeDataBinding) : BindingViewHolder<BarcodeData, HolderBarcodeDataBinding>(binding) {
+        init {
+            binding.setOnBookmark {
+                Toast.makeText(context, "Click", Toast.LENGTH_LONG).show()
+            }
+        }
         override fun onBindViewDataBinding() {
             super.onBindViewDataBinding()
             binding.barcodeData = item

@@ -1,18 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="barcodeData"
             type="com.taetae98.qrreader.dto.BarcodeData" />
+        <variable
+            name="onBookmark"
+            type="android.view.View.OnClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@{barcodeData.barcode}"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content">
+            <com.taetae98.qrreader.view.BarcodeView
+                android:id="@+id/barcode_view"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:barcode="@{barcodeData.barcode}"
+                app:format="@{barcodeData.format}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/bookmark_view"
+                android:onClickListener="@{onBookmark}"
+                android:src="@drawable/ic_bookmark"
+                android:contentDescription="@string/bookmark"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@android:color/transparent"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:isActivated="@{barcodeData.bookmarked}"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/barcode_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/barcode_text_view"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/barcode_text_view"
+                android:text="@{barcodeData.barcode}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toBottomOf="@id/bookmark_view"
+                app:layout_constraintStart_toEndOf="@id/barcode_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="@string/app_url"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
