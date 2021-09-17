@@ -19,7 +19,7 @@ class InternalStorageManager @Inject constructor(
     companion object {
         const val QR_PATH = "qr"
 
-        fun getQRTempName(): String {
+        fun getTempName(): String {
             return System.currentTimeMillis().toString()
         }
     }

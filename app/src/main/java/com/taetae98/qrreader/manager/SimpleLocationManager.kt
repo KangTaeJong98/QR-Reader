@@ -31,7 +31,7 @@ class SimpleLocationManager @Inject constructor(
                 }
             }
         } else {
-            throw Exception("Permission Denied")
+            null
         }
     }
 
@@ -47,8 +47,6 @@ class SimpleLocationManager @Inject constructor(
                     onLocation.invoke(it)
                 }
             }
-        } else {
-            throw Exception("Permission Denied")
         }
     }
 }

@@ -31,7 +31,7 @@ class SimpleClipboardManager @Inject constructor(
     }
 
     fun copyBarcode(label: String = "", barcode: String = "", formant: BarcodeFormat = BarcodeFormat.QR_CODE): Uri {
-        return internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getQRTempName(), barcode.toBarcode(formant)).also {
+        return internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getTempName(), barcode.toBarcode(formant)).also {
             copyUri(it, label)
         }
     }
