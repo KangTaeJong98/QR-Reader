@@ -88,6 +88,7 @@
 
         <com.taetae98.qrreader.view.BarcodeView
             android:id="@+id/barcode_view"
+            android:foreground="?attr/selectableItemBackground"
             app:barcode="@{barcodeViewModel.barcode}"
             app:format="@{barcodeViewModel.format}"
             android:layout_width="300dp"

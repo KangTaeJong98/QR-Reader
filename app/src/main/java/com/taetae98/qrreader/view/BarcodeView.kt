@@ -15,7 +15,11 @@ import com.taetae98.qrreader.application.toBarcode
 import com.taetae98.qrreader.handler.BarcodeActionHandler
 import com.taetae98.qrreader.manager.InternalStorageManager
 import com.taetae98.qrreader.manager.SimpleClipboardManager
+import com.taetae98.qrreader.repository.BarcodeDataRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,7 +44,7 @@ class BarcodeView @JvmOverloads constructor(
             BarcodeViewActionItem(context.getString(R.string.share_image)) {
                 Intent(Intent.ACTION_SEND).apply {
                     type = "image/*"
-                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(barcode.toBarcode(format)))
+                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getQRTempName(), barcode.toBarcode(format)))
                 }.also {
                     context.startActivity(Intent.createChooser(it, barcode))
                 }
@@ -69,6 +73,9 @@ class BarcodeView @JvmOverloads constructor(
     @Inject
     lateinit var internalStorageManager: InternalStorageManager
 
+    @Inject
+    lateinit var barcodeDataRepository: BarcodeDataRepository
+
     var barcodeActionHandler: BarcodeActionHandler = BarcodeActionHandler.SimpleBarcodeActionHandler(context)
 
     var barcode = context.getString(R.string.app_url)
@@ -88,12 +95,18 @@ class BarcodeView @JvmOverloads constructor(
     init {
         setOnClickListener {
             barcodeActionHandler.action(barcode)
+            CoroutineScope(Dispatchers.IO).launch {
+                barcodeDataRepository.insert(barcode, format)
+            }
         }
 
         setOnLongClickListener {
             AlertDialog.Builder(context)
                 .setItems(onLongClickItems.map { it.text }.toTypedArray()) { _, i ->
                     onLongClickItems[i].action.invoke()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        barcodeDataRepository.insert(barcode, format)
+                    }
                 }.show()
             true
         }

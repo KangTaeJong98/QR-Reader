@@ -21,6 +21,7 @@
             android:layout_height="wrap_content">
             <com.taetae98.qrreader.view.BarcodeView
                 android:id="@+id/barcode_view"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:barcode="@{barcodeData.barcode}"

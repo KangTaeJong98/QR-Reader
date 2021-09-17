@@ -2,6 +2,7 @@ package com.taetae98.qrreader.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.google.zxing.BarcodeFormat
 import com.taetae98.qrreader.repository.BarcodeDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,4 +16,8 @@ class BarcodeDataViewModel @Inject constructor(
 
     val barcodeData by lazy { barcodeDataRepository.findAllLiveData() }
     val bookmarkedBarcodeData by lazy { barcodeDataRepository.findIsBookmarked() }
+
+    suspend fun insert(barcode: String, format: BarcodeFormat = BarcodeFormat.QR_CODE) {
+        barcodeDataRepository.insert(barcode, format)
+    }
 }

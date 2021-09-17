@@ -31,7 +31,7 @@ class SimpleLocationManager @Inject constructor(
                 }
             }
         } else {
-            null
+            throw Exception("Permission Denied")
         }
     }
 

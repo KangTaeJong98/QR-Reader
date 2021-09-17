@@ -12,13 +12,18 @@ import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentScanBinding
 import com.taetae98.qrreader.manager.SimpleClipboardManager
+import com.taetae98.qrreader.viewmodel.BarcodeDataViewModel
 import com.taetae98.qrreader.viewmodel.BarcodeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScanFragment : NavigationFragment<FragmentScanBinding>(R.layout.fragment_scan) {
     private val barcodeViewModel by activityViewModels<BarcodeViewModel>()
+    private val barcodeDataViewModel by activityViewModels<BarcodeDataViewModel>()
 
     private val onScanResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -27,6 +32,9 @@ class ScanFragment : NavigationFragment<FragmentScanBinding>(R.layout.fragment_s
             Activity.RESULT_OK -> {
                 IntentIntegrator.parseActivityResult(it.resultCode, it.data).also { result ->
                     barcodeViewModel.barcode.value = result.contents
+                    CoroutineScope(Dispatchers.IO).launch {
+                        barcodeDataViewModel.insert(result.contents)
+                    }
                 }
             }
         }

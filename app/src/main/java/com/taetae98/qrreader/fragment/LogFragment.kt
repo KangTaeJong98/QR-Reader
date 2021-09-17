@@ -12,13 +12,16 @@ import com.taetae98.qrreader.databinding.FragmentLogBinding
 import com.taetae98.qrreader.interfaces.TabComponent
 import com.taetae98.qrreader.viewmodel.BarcodeDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogFragment : NavigationFragment<FragmentLogBinding>(R.layout.fragment_log), TabComponent {
     override val tabIcon = R.drawable.ic_round_history_24
 
     private val viewModel by activityViewModels<BarcodeDataViewModel>()
-    private val barcodeDataAdapter by lazy { BarcodeDataAdapter() }
+
+    @Inject
+    lateinit var barcodeDataAdapter: BarcodeDataAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
