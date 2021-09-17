@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.core.content.FileProvider
 import com.taetae98.qrreader.R
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -17,8 +16,16 @@ class InternalStorageManager @Inject constructor(
     @ApplicationContext
     private val context: Context
 ) {
-    fun saveBitmap(bitmap: Bitmap): Uri {
-        val file = File(context.cacheDir, "${SimpleClipboardManager.QR_DIRECTORY}${File.pathSeparator}${System.currentTimeMillis()}.png").also {
+    companion object {
+        const val QR_PATH = "qr"
+
+        fun getQRTempName(): String {
+            return System.currentTimeMillis().toString()
+        }
+    }
+
+    fun saveBitmap(path: String, name: String, bitmap: Bitmap): Uri {
+        val file = File("${context.cacheDir}/$path", "$name.png").also {
             it.parentFile?.mkdirs()
         }
 

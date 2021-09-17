@@ -7,7 +7,6 @@ import android.net.Uri
 import com.google.zxing.BarcodeFormat
 import com.taetae98.qrreader.application.toBarcode
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,23 +18,21 @@ class SimpleClipboardManager @Inject constructor(
 ) {
     private val manager by lazy { context.getSystemService(ClipboardManager::class.java) }
 
-    companion object {
-        const val QR_DIRECTORY = "qr"
-    }
-
     fun copyText(label: String = "", text: String = "") {
         manager.setPrimaryClip(
             ClipData.newPlainText(label, text)
         )
     }
 
+    fun copyUri(uri: Uri = Uri.EMPTY, label: String = "") {
+        manager.setPrimaryClip(
+            ClipData.newUri(context.contentResolver, label, uri)
+        )
+    }
+
     fun copyBarcode(label: String = "", barcode: String = "", formant: BarcodeFormat = BarcodeFormat.QR_CODE): Uri {
-        return internalStorageManager.saveBitmap(barcode.toBarcode(formant)).also {
-            manager.setPrimaryClip(
-                ClipData.newUri(
-                    context.contentResolver, label, it
-                )
-            )
+        return internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getQRTempName(), barcode.toBarcode(formant)).also {
+            copyUri(it, label)
         }
     }
 }

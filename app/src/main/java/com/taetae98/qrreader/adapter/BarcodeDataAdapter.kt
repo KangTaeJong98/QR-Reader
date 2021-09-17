@@ -2,15 +2,24 @@ package com.taetae98.qrreader.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import com.taetae98.modules.library.base.BaseViewHolder
 import com.taetae98.modules.library.binding.BindingRecyclerViewAdapter
 import com.taetae98.modules.library.binding.BindingViewHolder
 import com.taetae98.qrreader.databinding.HolderBarcodeDataBinding
 import com.taetae98.qrreader.dto.BarcodeData
+import com.taetae98.qrreader.repository.BarcodeDataRepository
+import dagger.hilt.android.scopes.FragmentScoped
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BarcodeDataAdapter : BindingRecyclerViewAdapter<BarcodeData>(diffCallback) {
+@FragmentScoped
+class BarcodeDataAdapter @Inject constructor() : BindingRecyclerViewAdapter<BarcodeData>(diffCallback) {
+    @Inject
+    lateinit var barcodeDataRepository: BarcodeDataRepository
+
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<BarcodeData>() {
             override fun areItemsTheSame(oldItem: BarcodeData, newItem: BarcodeData): Boolean {
@@ -34,9 +43,12 @@ class BarcodeDataAdapter : BindingRecyclerViewAdapter<BarcodeData>(diffCallback)
     inner class BarcodeDataViewHolder(binding: HolderBarcodeDataBinding) : BindingViewHolder<BarcodeData, HolderBarcodeDataBinding>(binding) {
         init {
             binding.setOnBookmark {
-                Toast.makeText(context, "Click", Toast.LENGTH_LONG).show()
+                CoroutineScope(Dispatchers.IO).launch {
+                    barcodeDataRepository.executeToggleBookmark(item)
+                }
             }
         }
+
         override fun onBindViewDataBinding() {
             super.onBindViewDataBinding()
             binding.barcodeData = item

@@ -184,12 +184,12 @@
 
         <com.taetae98.qrreader.view.BarcodeView
             android:id="@+id/barcode_view"
+            android:foreground="?attr/selectableItemBackground"
             app:barcode="@{barcodeViewModel.barcode}"
             app:format="@{barcodeViewModel.format}"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_margin="50dp"
-            app:cardBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/all_day_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
