@@ -13,6 +13,7 @@ import com.taetae98.qrreader.R
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.application.toBarcode
 import com.taetae98.qrreader.handler.BarcodeActionHandler
+import com.taetae98.qrreader.manager.ExternalStorageManager
 import com.taetae98.qrreader.manager.InternalStorageManager
 import com.taetae98.qrreader.manager.SimpleClipboardManager
 import com.taetae98.qrreader.repository.BarcodeDataRepository
@@ -44,7 +45,7 @@ class BarcodeView @JvmOverloads constructor(
             BarcodeViewActionItem(context.getString(R.string.share_image)) {
                 Intent(Intent.ACTION_SEND).apply {
                     type = "image/*"
-                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getQRTempName(), barcode.toBarcode(format)))
+                    putExtra(Intent.EXTRA_STREAM, internalStorageManager.saveBitmap(InternalStorageManager.QR_PATH, InternalStorageManager.getTempName(), barcode.toBarcode(format)))
                 }.also {
                     context.startActivity(Intent.createChooser(it, barcode))
                 }
@@ -63,6 +64,12 @@ class BarcodeView @JvmOverloads constructor(
                 }.also {
                     it.printBitmap(context.getString(R.string.code), barcode.toBarcode(format))
                 }
+            },
+            BarcodeViewActionItem(context.getString(R.string.save_image)) {
+                externalStorageManager.saveBitmap(
+                    ExternalStorageManager.getTempName(),
+                    barcode.toBarcode(format)
+                )
             }
         )
     }
@@ -72,6 +79,9 @@ class BarcodeView @JvmOverloads constructor(
 
     @Inject
     lateinit var internalStorageManager: InternalStorageManager
+
+    @Inject
+    lateinit var externalStorageManager: ExternalStorageManager
 
     @Inject
     lateinit var barcodeDataRepository: BarcodeDataRepository
