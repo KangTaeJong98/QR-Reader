@@ -4,7 +4,7 @@ buildscript {
         navigation_version = "2.3.5"
         hilt_version = "2.38.1"
         qr_version = "4.2.0"
-        room_version = "2.3.0"
+        room_version = "2.4.0-alpha01"
     }
     repositories {
         google()

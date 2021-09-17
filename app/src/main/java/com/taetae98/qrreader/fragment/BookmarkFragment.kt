@@ -8,5 +8,5 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BookmarkFragment : NavigationFragment<FragmentBookmarkBinding>(R.layout.fragment_bookmark), TabComponent {
-    override val tabIcon = R.drawable.ic_round_bookmark_24
+    override val tabIcon = R.drawable.ic_round_star_24
 }

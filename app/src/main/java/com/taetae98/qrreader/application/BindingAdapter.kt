@@ -1,5 +1,6 @@
 package com.taetae98.qrreader.application
 
+import android.view.View
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
@@ -21,5 +22,11 @@ object BindingAdapter {
         } else {
             view.hide()
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("isActivated")
+    fun isActivated(view: View, boolean: Boolean) {
+        view.isActivated = boolean
     }
 }
