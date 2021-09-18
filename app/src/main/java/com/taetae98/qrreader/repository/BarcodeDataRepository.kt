@@ -22,10 +22,6 @@ class BarcodeDataRepository @Inject constructor(
         return barcodeDataDao.findByBarcodeAndFormat(barcode, format)
     }
 
-    suspend fun insert(barcodeData: BarcodeData): Long {
-        return barcodeDataDao.insert(barcodeData)
-    }
-
     suspend fun insert(barcode: String, format: BarcodeFormat): Long {
         val optional = findByBarcodeAndFormat(barcode, format)
         val barcodeData = if (optional.isPresent) {
@@ -39,19 +35,15 @@ class BarcodeDataRepository @Inject constructor(
             )
         }
 
-        return insert(barcodeData)
+        return barcodeDataDao.insert(barcodeData)
     }
 
-    suspend fun delete(barcodeData: BarcodeData): Int {
-        return barcodeDataDao.delete(barcodeData)
+    suspend fun deleteByIds(collection: Collection<Long>): Int {
+        return barcodeDataDao.deleteByIds(collection)
     }
 
     suspend fun update(barcodeData: BarcodeData): Int {
         return barcodeDataDao.update(barcodeData)
-    }
-
-    suspend fun executeToggleBookmark(barcodeData: BarcodeData): Int {
-        return executeToggleBookmark(barcodeData.id)
     }
 
     suspend fun executeToggleBookmark(id: Long): Int {

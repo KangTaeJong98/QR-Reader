@@ -20,4 +20,20 @@
         android:name="com.taetae98.qrreader.fragment.HistoryFragment"
         android:label="@string/history"
         tools:layout="@layout/fragment_history"/>
+    <dialog
+        android:id="@+id/barcodeDialog"
+        android:name="com.taetae98.qrreader.dialog.BarcodeDialog"
+        android:label="@string/barcode"
+        tools:layout="@layout/dialog_barcode">
+        <argument
+            android:name="barcode"
+            app:argType="string" />
+        <argument
+            android:name="format"
+            app:argType="com.google.zxing.BarcodeFormat"
+            android:defaultValue="QR_CODE" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_barcodeDialog"
+        app:destination="@id/barcodeDialog" />
 </navigation>

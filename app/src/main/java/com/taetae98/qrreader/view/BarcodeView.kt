@@ -70,6 +70,7 @@ class BarcodeView @JvmOverloads constructor(
                     ExternalStorageManager.getTempName(),
                     barcode.toBarcode(format)
                 )
+                Toast.makeText(context, R.string.finish, Toast.LENGTH_SHORT).show()
             }
         )
     }

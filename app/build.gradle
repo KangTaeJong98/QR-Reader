@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.KangTaeJong98:Library:5.1.2'
+    implementation 'com.github.KangTaeJong98:Library:6.0.0'
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"

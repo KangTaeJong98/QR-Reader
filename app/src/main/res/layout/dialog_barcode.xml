@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.google.zxing.BarcodeFormat" />
+
+        <variable
+            name="barcode"
+            type="String" />
+        <variable
+            name="format"
+            type="com.google.zxing.BarcodeFormat" />
+    </data>
+
+    <com.taetae98.qrreader.view.BarcodeView
+        app:barcode="@{barcode}"
+        app:format="@{format ?? BarcodeFormat.QR_CODE}"
+        android:layout_width="300dp"
+        android:layout_height="300dp" />
+</layout>

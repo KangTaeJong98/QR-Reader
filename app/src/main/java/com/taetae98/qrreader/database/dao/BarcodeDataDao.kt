@@ -19,6 +19,9 @@ interface BarcodeDataDao : BaseDao<BarcodeData> {
     @Query("SELECT * FROM BarcodeData WHERE barcode=:barcode AND format=:format")
     suspend fun findByBarcodeAndFormat(barcode: String, format: BarcodeFormat): Optional<BarcodeData>
 
+    @Query("DELETE FROM BarcodeData WHERE id IN (:collection)")
+    suspend fun deleteByIds(collection: Collection<Long>): Int
+
     @Query("UPDATE BarcodeData SET isBookmarked = NOT isBookmarked WHERE id=:id")
     suspend fun executeToggleBookmark(id: Long): Int
 }
