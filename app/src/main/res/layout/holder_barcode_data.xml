@@ -4,31 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <variable
+            name="isSelecting"
+            type="Boolean" />
+        <variable
+            name="isChecked"
+            type="Boolean" />
         <variable
             name="barcodeData"
             type="com.taetae98.qrreader.dto.BarcodeData" />
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
         <variable
             name="onBookmark"
             type="android.view.View.OnClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        app:cardCornerRadius="10dp"
+        android:onClickListener="@{onClick}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.taetae98.qrreader.view.BarcodeView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/barcode_view"
-                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:barcode="@{barcodeData.barcode}"
                 app:format="@{barcodeData.format}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/image_qr"/>
 
             <ImageButton
                 android:id="@+id/bookmark_view"
@@ -44,8 +54,22 @@
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/barcode_view"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/checkbox"
                 app:layout_constraintBottom_toTopOf="@id/barcode_text_view"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/checkbox"
+                android:visibility="@{isSelecting ? View.VISIBLE : View.GONE}"
+                android:src="@{isChecked ? @drawable/ic_round_check_box_24 : @drawable/ic_round_check_box_outline_blank_24}"
+                android:background="@android:color/transparent"
+                android:tint="?attr/colorPrimary"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="visible"
+                tools:src="@drawable/ic_round_check_box_24"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/barcode_text_view"

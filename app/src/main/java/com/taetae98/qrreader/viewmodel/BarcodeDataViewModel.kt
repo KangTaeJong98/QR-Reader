@@ -20,4 +20,8 @@ class BarcodeDataViewModel @Inject constructor(
     suspend fun insert(barcode: String, format: BarcodeFormat = BarcodeFormat.QR_CODE) {
         barcodeDataRepository.insert(barcode, format)
     }
+
+    suspend fun deleteByIds(collection: Collection<Long>): Int {
+        return barcodeDataRepository.deleteByIds(collection)
+    }
 }
