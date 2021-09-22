@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.zxing.BarcodeFormat
+import java.io.Serializable
 
 @Entity(
     indices = [
@@ -30,4 +31,4 @@ data class BarcodeData(
     val time: Long = System.currentTimeMillis(),
     val name: String = "",
     val isBookmarked: Boolean = false
-)
+) : Serializable

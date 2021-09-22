@@ -15,6 +15,7 @@ import com.taetae98.qrreader.adapter.BarcodeDataAdapter
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.databinding.FragmentBarcodeDataBinding
 import com.taetae98.qrreader.interfaces.TabComponent
+import com.taetae98.qrreader.repository.BarcodeDataRepository
 import com.taetae98.qrreader.selection.BarcodeDataSelection
 import com.taetae98.qrreader.viewmodel.BarcodeDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,9 @@ class BookmarkFragment : NavigationFragment<FragmentBarcodeDataBinding>(R.layout
     @Inject
     lateinit var barcodeDataAdapter: BarcodeDataAdapter
 
+    @Inject
+    lateinit var barcodeDataRepository: BarcodeDataRepository
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onObserveBarcodeData()
@@ -78,7 +82,7 @@ class BookmarkFragment : NavigationFragment<FragmentBarcodeDataBinding>(R.layout
 
             selectionTracker.instance.clearSelection()
             CoroutineScope(Dispatchers.IO).launch {
-                viewModel.deleteByIds(collection)
+                barcodeDataRepository.deleteByIds(collection)
             }
         }
     }

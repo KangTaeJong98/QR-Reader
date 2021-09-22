@@ -69,4 +69,6 @@
     <string name="bookmark">Bookmark</string>
     <string name="save_image">Save Image</string>
     <string name="log">Log</string>
+    <string name="name">Name</string>
+    <string name="search">Search</string>
 </resources>
