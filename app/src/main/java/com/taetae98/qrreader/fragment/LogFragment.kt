@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionTracker
 import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.modules.library.toDP
@@ -14,7 +15,9 @@ import com.taetae98.qrreader.R
 import com.taetae98.qrreader.adapter.BarcodeDataAdapter
 import com.taetae98.qrreader.application.TAG
 import com.taetae98.qrreader.databinding.FragmentBarcodeDataBinding
+import com.taetae98.qrreader.dialog.BarcodeEditDialogDirections
 import com.taetae98.qrreader.interfaces.TabComponent
+import com.taetae98.qrreader.repository.BarcodeDataRepository
 import com.taetae98.qrreader.selection.BarcodeDataSelection
 import com.taetae98.qrreader.viewmodel.BarcodeDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +53,9 @@ class LogFragment : NavigationFragment<FragmentBarcodeDataBinding>(R.layout.frag
     @Inject
     lateinit var barcodeDataAdapter: BarcodeDataAdapter
 
+    @Inject
+    lateinit var barcodeDataRepository: BarcodeDataRepository
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onObserveBarcodeData()
@@ -70,6 +76,13 @@ class LogFragment : NavigationFragment<FragmentBarcodeDataBinding>(R.layout.frag
 
     override fun onCreateViewDataBinding() {
         super.onCreateViewDataBinding()
+        binding.setOnEdit {
+            val id = selectionTracker.instance.selection.first()
+            val holder = binding.barcodeDataRecyclerView.findViewHolderForItemId(id)
+            if (holder is BarcodeDataAdapter.BarcodeDataViewHolder) {
+                findNavController().navigate(BarcodeEditDialogDirections.actionGlobalBarcodeEditDialog(holder.item))
+            }
+        }
         binding.setOnCancel {
             selectionTracker.instance.clearSelection()
         }
@@ -78,7 +91,7 @@ class LogFragment : NavigationFragment<FragmentBarcodeDataBinding>(R.layout.frag
 
             selectionTracker.instance.clearSelection()
             CoroutineScope(Dispatchers.IO).launch {
-                viewModel.deleteByIds(collection)
+                barcodeDataRepository.deleteByIds(collection)
             }
         }
     }

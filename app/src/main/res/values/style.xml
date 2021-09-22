@@ -6,6 +6,14 @@
         <item name="cornerRadius">0dp</item>
     </style>
 
+    <style name="Theme.QRReader.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.QRReader.TextInputLayout.OutlinedBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+    </style>
+
     <style name="Theme.QRReader.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">@android:color/transparent</item>
     </style>

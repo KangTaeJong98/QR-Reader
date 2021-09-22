@@ -1,15 +1,15 @@
 package com.taetae98.qrreader.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.taetae98.modules.library.navigation.NavigationFragment
 import com.taetae98.qrreader.R
 import com.taetae98.qrreader.databinding.FragmentHistoryBinding
+import com.taetae98.qrreader.dialog.BarcodeDataSearchDialogDirections
 import com.taetae98.qrreader.interfaces.TabComponent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,16 +33,42 @@ class HistoryFragment : NavigationFragment<FragmentHistoryBinding>(R.layout.frag
         }
     }
 
+    init {
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_history_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.search -> {
+                onSearch()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
+        onCreateSupportActionBar()
         onCreateViewPager()
         onCreateTabLayoutMediator()
 
         return binding.root
+    }
+
+    private fun onCreateSupportActionBar() {
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun onCreateViewPager() {
@@ -56,5 +82,9 @@ class HistoryFragment : NavigationFragment<FragmentHistoryBinding>(R.layout.frag
                 tab.setIcon(fragment.tabIcon)
             }
         }.attach()
+    }
+
+    private fun onSearch() {
+        findNavController().navigate(BarcodeDataSearchDialogDirections.actionGlobalBarcodeDataSearchDialog())
     }
 }

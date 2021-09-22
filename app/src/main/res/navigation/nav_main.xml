@@ -36,4 +36,22 @@
     <action
         android:id="@+id/action_global_barcodeDialog"
         app:destination="@id/barcodeDialog" />
+    <dialog
+        android:id="@+id/barcodeEditDialog"
+        android:name="com.taetae98.qrreader.dialog.BarcodeEditDialog"
+        tools:layout="@layout/dialog_barcode_edit" >
+        <argument
+            android:name="barcodeData"
+            app:argType="com.taetae98.qrreader.dto.BarcodeData" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_barcodeEditDialog"
+        app:destination="@id/barcodeEditDialog" />
+    <dialog
+        android:id="@+id/barcodeDataSearchDialog"
+        android:name="com.taetae98.qrreader.dialog.BarcodeDataSearchDialog"
+        tools:layout="@layout/dialog_barcode_data_search" />
+    <action
+        android:id="@+id/action_global_barcodeDataSearchDialog"
+        app:destination="@id/barcodeDataSearchDialog" />
 </navigation>
